@@ -1,0 +1,66 @@
+.accordion-icon {
+float: right;
+width:14px;
+height:14px;
+display: inline-block;
+line-height: 14px;
+vertical-align: bottom;
+margin-top: 5px;
+background-repeat: no-repeat;                
+}
+.accordion-icon-open {
+background-image: url("../images/accordion_open.png");
+}
+.accordion-icon-close {
+background-image: url("../images/accordion_close.png");
+}
+
+.accordion-heading a {
+    color: black;
+}
+
+.accordion-heading a:hover {
+    color: #005580;
+    text-decoration: none;
+}
+.accordion-inner {
+    background-color: #F4F4F4;
+}
+
+.accordion-group {
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 0px;
+}
+
+.accordion ul {
+    list-style: none;
+    margin: 0;
+}
+
+.accordion table {
+    width: 100%;
+}
+.accordion .label {
+    line-height: 23px;
+}
+
+.accordion img {
+    margin-right: 5px;
+}
+.accordion select {
+    width: 100px;
+}
+.accordion input {
+    margin-right: 5px;
+}
+.accordion span {
+    white-space: nowrap;
+}
+.accordion li {
+    margin: 5px;
+}
+hr {
+    margin: 0;
+    border-top: none;
+    border-bottom: silver dashed 1px;
+}

@@ -1,0 +1,512 @@
+.content{
+    padding: 18px;
+    font-size: 12px;
+    color: gray;
+    background-color: #e2e7ea;
+}
+.posterbox{
+    background-color: white;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #BAC1CE;
+    border-radius:3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    box-shadow: 0px 1px 1px #6a6a6a;
+    -moz-box-shadow:  0px 1px 4px #6a6a6a;
+    padding: 0 10px;
+}
+
+.titlegroup{
+    border-style: solid;
+    border-width: 1px;
+    border-color: #d9d9d9;
+    border-left: 0px;
+    border-right: 0px;
+    border-top: 0px;
+}
+
+.statisticbox{
+   margin: 5px 0;
+}
+
+
+.titlegroup ul,.statisticbox ul{
+    list-style: none;
+    margin: 0;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.titlegroup ul li,.statisticbox ul li:last-child{
+    display: inline-block;
+    margin-right: -6px;
+    text-align: center;
+    padding: 10px 0;
+    border-right: none;
+    font-weight: bold;
+}
+
+.statisticbox ul li{
+    display: inline-block;
+    margin-right: -6px;
+    text-align: center;
+    padding: 10px 0;
+    font-weight: bold;
+}
+
+.separatordashed ul li{
+    border-right: silver dashed 1px;
+}
+
+.separatorsolid ul li{
+    border-right: silver solid 1px;
+}
+
+.percent20 ul li{
+    width: 20%;
+}
+
+
+.percent33 ul li{
+    width: 33%;
+}
+.percent33 ul li:last-child{
+    width: 34%;
+}
+
+.percent50 ul li{
+    width: 50%;
+}
+
+.percent100 ul li{
+    width: 100%;
+    height: 100%;
+}
+
+.statistictable{
+    width: 100%;
+    height: 100%;
+}
+
+.statistictable td:first-child{
+    padding-left: 15px;
+    text-align: left;
+}
+
+.statistictable td:last-child{
+    padding-right: 15px;
+    text-align: right;
+    font-weight: normal;
+}
+
+.statisticbox h1{
+    font-size: 33px;
+    font-family: Arial;
+    color: #000000;
+    display: inline-block;
+    margin: 0;
+}
+
+.statisticbox h2{
+    font-size: 15px;
+    display: inline-block;
+    margin: 0;
+}
+
+.moreicon{
+    /*border: silver solid thin;*/
+    height: 16px;
+    width: 30px;
+    /*border-radius: 12px;*/
+    /*-webkit-border-radius: 12px;*/
+    /*-moz-border-radius: 12px;*/
+    float:right;
+    /*margin-right: 8px;*/
+    /*margin-top: auto;*/
+    /*margin-bottom: auto;*/
+    /*padding: 0 4px 0 2px;*/
+    /*font-style: normal;*/
+    background-image: url("../images/icon_more.png");
+}
+
+.moreiconwhite {
+    border:#ffffff thin solid;
+    border-radius:10px ;
+    padding:2px 5px;
+    margin-right: 10px ;
+    color: #ffffff;
+}
+
+.chart{
+    height: 270px;
+}
+
+.postertable{
+    width: 100%;
+}
+
+.postertable td:first-child{
+    width: 66%;
+    padding-right: 1%;
+}
+
+.postertable td:last-child{
+    width: 33%;
+    padding-left: 16px;
+}
+
+.routetable{
+    width: 100%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    font-weight: normal;
+
+}
+.routetable thead{
+   border-bottom: silver thin solid;
+
+}
+
+.percent98{
+    width: 98%;
+}
+
+.lefttable{
+    width: 90%;
+    margin: auto;
+}
+
+.lefttable td{
+    font-family: 微软雅黑;
+    font-weight: bold;
+    border-bottom: silver thin dashed;
+    padding: 3px;
+}
+
+.routetable td{
+    text-align: left;
+    margin: 0;
+    vertical-align: middle;
+    padding: 4px;
+}
+
+.routetable tr:hover {
+    color: black;
+}
+
+.routetable tr.selected {
+    background: #E2E5EC;
+}
+
+.routetable th{
+    display: table-cell;
+    text-align: left;
+    padding: 0;
+    vertical-align: middle;
+}
+
+.routetable p{
+    display: inline;
+    padding:0 23px;
+    /*color: #ee948c;*/
+}
+
+.highlinetitle{
+    display: inline-block;
+    padding:0 20px;
+    font-style: normal;
+    font-weight: normal;
+}
+
+
+.jam th{
+    color: white;
+    background-color: #b94a48;
+    border-right: #b94a48 thin solid;
+    border-left: #ee948c thin solid;
+    vertical-align: middle;
+}
+
+.jam th p{
+    color: #ee948c;
+}
+
+.jam i{
+    background-color: #ee948c;
+}
+
+
+.fast th{
+    color: white;
+    background-color: #2483b9;
+    border-right: #2483b9 thin solid;
+    border-left: #3ec0ee thin solid;
+    vertical-align: middle;
+}
+
+.fast th p{
+    color: #3ec0ee;
+}
+
+.fast i{
+    background-color: #3ec0ee;
+}
+
+.medium th{
+    color: white;
+    background-color: #d49846;
+    border-right: #d49846 thin solid;
+    border-left: #eedf0e thin solid;
+    vertical-align: middle;
+}
+
+.medium th p{
+    color: #eedf0e;
+}
+
+.medium i{
+    background-color: #eedf0e;
+}
+
+.trafficevent{
+
+    width: 100%;
+
+    border-collapse: collapse;
+    box-shadow: 0px 1px 1px #6a6a6a;
+    -moz-box-shadow:  0px 1px 4px #6a6a6a;
+    background-color: white;
+    margin: 8px 0;
+    border: silver thin solid;
+
+
+}
+
+
+.trafficevent th {
+
+    color: #3a5084;
+    line-height: 28px;
+    border-left: silver thin solid;
+    border-bottom: silver thin solid;
+
+    width: 25%;
+}
+
+.VSplitLastfalse {
+    border-right: silver dashed 1px;
+}
+
+
+
+.trafficevent tr:hover {
+    color: black;
+}
+
+.trafficevent tr.selected {
+    background: #E2E5EC;
+}
+
+
+
+.trafficevent td{
+    border-right: silver thin solid;
+    padding: 5px 8px;
+    text-align: center;
+}
+
+.trafficevent td img{
+    margin: 3px 6px;
+}
+
+.titlegap{
+    padding-top: 15px;
+    padding-bottom: 5px;
+    font-size: 15px;
+    font-family:微软雅黑,宋体,"Microsoft YaHei";
+}
+
+.customshowtable{
+    height: 150px;
+    overflow-y: auto;
+    width: 98%;
+    margin: 0 auto;
+}
+
+.customshowtable::-webkit-scrollbar{
+    width:8px;
+
+}
+.customshowtable::-webkit-scrollbar-button {
+
+}
+.customshowtable::-webkit-scrollbar-track {
+
+}
+.customshowtable::-webkit-scrollbar-track-piece {
+    background-color:#fff;
+}
+.customshowtable::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background:#999;
+}
+.customshowtable::-webkit-scrollbar-corner {
+
+}
+
+.customshowtable::-webkit-resizer {
+
+}
+
+.shadow {
+    /*Internet Explorer*/
+    background: #fff;
+    /*Internet Explorer 8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(color='#818181', Direction=135, Strength=2)";/*for ie6,7,8*/
+    /*低于Internet Explorer 版本8*/
+    *filter: progid:DXImageTransform.Microsoft.Shadow(color='#818181', Direction=135, Strength=2);/*for ie6,7,8*/
+    /*标准浏览器*/
+    box-shadow:0px 1px 2px #818181;
+
+    /*border-bottom: #6a6a6a solid 1px;*/
+    box-shadow: 0px 1px 2px #818181;
+    -webkit-box-shadow:0px 1px 2px #818181;/*webkit*/
+    -moz-box-shadow:0px 1px 2px #818181;
+}
+
+.col_fade{
+    border-left: #BAC1CE solid 1px;
+    border-top: #BAC1CE solid 1px;
+    background-color: #ffffff;
+    border-top-left-radius: 4px;
+    padding: 5px 10px;
+    position: relative;
+    top: 3px;
+    color: #3c5085;
+    font-weight: bold;
+    padding-right: 2px;
+}
+
+
+.map_link a {
+    margin-right: 20px;
+    margin-top: 10px;
+}
+
+#cleft {
+    width: 300px;
+    float: left;
+    border-right: #959595 solid 1px;
+}
+
+#ccenter {
+    margin-left: 300px;
+    border-left: #959595 solid 1px;
+}
+
+.nav {
+    position: relative;
+    left: 0;
+    display: block;
+    float: left;
+    margin: 0 10px 0 0;
+    list-style: none;
+    padding: 0;
+    background: white;
+    width: 100%;
+}
+
+.nav > li {
+    float: left;
+    padding:10px 0;
+    line-height: 20px;
+    width:12.5%;
+    text-align: center;
+}
+
+.nav > li a {
+    color:#5A626F;
+}
+
+.nav > li a:hover {
+    background-color: white;
+}
+
+.nava:hover {
+    color: red;
+}
+
+.navspan {
+    font-weight: bold;
+    float: none;
+    margin-left: 5px;
+    vertical-align: middle;
+}
+
+    /*            .clearfix:after {
+                    content: ".";
+                    display: block;
+                    height: 0;
+                    visibility: hidden;
+                    clear: both;
+                }*/
+#s {
+    background-color: #404450;
+    padding: 2em 0;
+    border-top: 1px solid #bcc6d1;
+}
+
+.footer {
+    color: #2c2c2c;
+    line-height: 22px;
+    text-align: center;
+}
+
+.panel {
+    margin-bottom: 10px;
+}
+
+.panel .header {
+    padding: 5px 0;
+    font-size: 15px;
+}
+
+.panel .inner {
+    padding: 10px;
+}
+
+#n {
+    min-width: 1138px;
+}
+
+#s {
+    min-width: 1138px;
+}
+
+#leftlink {
+    text-align: left;
+}
+
+#leftlink li {
+    margin: 5px;
+    padding: 1px;
+    text-decoration: underline;
+}
+
+.chartheight{
+    height: 225px;
+    margin-top: 6px;
+    margin-bottom: 6px;
+}
+
+.singlechart{
+    border: solid thin silver;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    background-color: #ffffff;
+}
+
+
+
+

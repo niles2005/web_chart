@@ -1,0 +1,32 @@
+{
+
+    "legend":{"position":"right","visible":true,"icon":"circle"},
+    "bg_colour": "#FFFFFF",
+    "elements":[
+        {
+             "keys": [
+        {"colour":"#27C19F", "text":"A", "font-size": 12},
+        {"colour":"#4CA47C", "text":"B", "font-size": 12},
+        {"colour":"#E8504D", "text":"C", "font-size": 12},
+        {"colour":"#FDAD3C", "text":"D", "font-size": 12},
+        {"colour":"#F2CE3C  ", "text":"E", "font-size": 12}],
+            "type":      "pie",           
+            "border":    2,
+            "hale-pos-rate":0,
+            "label-pos-rate":0.6,
+            "split-line-outer":0.8,
+            "split-line-inner":0.4,
+            "tip":         "#label#",
+            "start-angle": -90,
+            "radius": 90,
+            "values" :   [
+                {"value":45,"alpha":1,"colour":"#27C19F","label":"45%","label-colour":"#FFFFFF","font-size":14},
+                {"value":15,"alpha":1,"colour":"#4CA47C","label":"15%","label-colour":"#FFFFFF","font-size":14},
+                {"value":12,"alpha":1,"colour":"#E8504D","label":"12%","label-colour":"#FFFFFF","font-size":14},
+                {"value":20,"alpha":1,"colour":"#FDAD3C","label":"20%","label-colour":"#FFFFFF","font-size":14},
+                {"value":8,"alpha":1,"colour":"#F2CE3C","label":"8%","label-colour":"#FFFFFF","font-size":14}
+            ]
+        }
+        
+    ]
+}

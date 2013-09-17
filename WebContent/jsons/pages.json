@@ -1,0 +1,36 @@
+{
+
+
+	"list": [
+		{"type":"page","name":"首页"},
+		{"type":"module","name":"交通状况综合监测","list":[
+			{"type":"block","name":"head"},
+			{"type":"block","name":"tail"},
+			{"type":"sidebar","name":"sidebar1"},
+
+			{"type":"page","name":"交通状况实时监测","list":[
+				{"type":"block","name":"head"},
+				{"type":"sidebar","name":"sidebar1"},
+				{"type":"panel","name":"router"},
+				{"type":"panel","name":"交叉口交通综合态势"},
+				{"type":"panel","name":"路段交通综合态势"},
+				{"type":"panel","name":"拥堵路段播报"},
+				{"type":"block","name":"tail"}
+			]},
+			{"type":"page","name":"路网交通综合态势","list":[
+				{"type":"sidebar","name":"交通状况综合监测/交通状况实时监测/sidebar1"},
+				{"type":"panel","name":"交通状况综合监测/交通状况实时监测/路段交通综合态势"},
+				{"type":"panel","name":"交叉口交通综合态势","style":"merge|split", "list":[
+					{"type":"chart","name":"瓶颈路段统计图","url":"jsonurl1"},
+					{"type":"chart","name":"瓶颈路段统计图","url":"jsonurl2"},
+					{"type":"listtable","name":"瓶颈路段统计图","url":"jsonurl3"}
+				]}
+			]},
+			{"type":"page","name":"重点监测路段综合态势"}
+		]},
+		{"type":"module","name":"交通状况预测预报"},
+		{"type":"module","name":"交通状况优化控制"}
+
+	]
+
+}

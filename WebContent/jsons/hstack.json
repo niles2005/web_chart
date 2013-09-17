@@ -1,0 +1,55 @@
+{
+
+  "legend":{"position":"top"},
+   "bg_colour":"#FFFFFF",
+  "elements":[
+    {
+        "alpha":1,
+        "barwidth":0.2,
+        "type":      "hbar_stack",
+      "colours":   ["#E95150","#FDAD3C","#27C1B9"],
+	  "id":1,
+      "keys": [
+        {"colour":"#E95150", "text":"故障", "font-size": 12},
+        {"colour":"#FDAD3C", "text":"嫌疑", "font-size": 12},
+        {"colour":"#27C1B9", "text":"正常", "font-size": 12}
+      ],
+	  "font-size":12,
+      "tip":"#key#<br>#val# / #total#",
+	  "barwidth":0.4,
+      "values": [
+        [{"left":0, "right":20},{"left":20,"right":40}, {"left":40, "right":90}],
+        [{"left":0, "right":15}, {"left":15, "right":35},{"left":35, "right":105}],
+        [{"left":0, "right":25},{"left":25, "right":55}, {"left":55, "right":130}],
+          [{"left":0, "right":10}, {"left":10, "right":45},{"left":45, "right":95}],
+          [{"left":0, "right":30},{"left":30, "right":60}, {"left":60, "right":120}],
+        [{"left":0, "right":25},{"left":25, "right":40}, {"left":40, "right":80},
+		 {"left":80, "right":120, "text":"new", "colour":"#00FF00"}]
+        ]
+    }
+  ],
+
+  "tooltip":{"mouse":2},
+
+  "y_axis":{
+    "labels": {
+      "labels": [{"y":0,"text":"可变情报板"},{"y":-1,"text":"电子警察"},
+	  {"y":-2,"text":"高清卡口"}, {"y":-3,"text":"视频监控"}, {"y":-4,"text":"线圈车检器"}, {"y":-5,"text":"微波车检器"}]
+    },
+    "stroke": 0,
+    "tick-length": 4,
+	"max":0,
+	"min":-5,
+	"offset":1,
+     "grid-colour": "#FFFFFF"
+  },
+  
+  "x_axis":{
+    "max":140,
+	"min":0,
+	"steps":20,
+    "stroke": 0,
+    "grid-colour": "#DEDEE6"
+
+  }
+}

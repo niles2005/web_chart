@@ -1,0 +1,13 @@
+/build/
+/.idea/
+wuproject.iml
+.project
+.classpath
+/nbproject/
+/.settings/
+/.externalToolBuilders/
+/classes/
+*.bak
+*.class
+*.iml
+/bak/

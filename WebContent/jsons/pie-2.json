@@ -1,0 +1,32 @@
+{
+
+    "legend":{"position":"right","visible":true,"icon":"circle"},
+    "bg_colour": "#FFFFFF",
+    "elements":[
+        {
+            "keys": [
+                {"colour":"#5DC9E6", "text":"长江路(黄河路-中山路)", "font-size": 12},
+                {"colour":"#1C99D3", "text":"黄河路(黄河路-中山路)", "font-size": 12},
+                {"colour":"#E95150", "text":"泰和路(黄河路-中山路)", "font-size": 12},
+                {"colour":"#FDAD3C", "text":"广南路(黄河路-中山路)", "font-size": 12},
+                {"colour":"#27C1B9", "text":"汉和路(黄河路-中山路)", "font-size": 12}],
+            "type":      "pie",
+            "border":    0,
+            "hale-pos-rate":0.5,
+            "label-pos-rate":0.7,
+            "split-line-outer":3.0,
+            "split-line-inner":1.5,
+            "tip":         "#label#",
+            "start-angle": -90,
+            "radius": 85,
+            "values" :   [
+                {"value":9,"alpha":1,"colour":"#5DC9E6","label":"9%","label-colour":"#FFFFFF","font-size":14},
+                {"value":27,"alpha":1,"colour":"#1C99D3","label":"27%","label-colour":"#FFFFFF","font-size":14},
+                {"value":18,"alpha":1,"colour":"#E95150","label":"18%","label-colour":"#FFFFFF","font-size":14},
+                {"value":11,"alpha":1,"colour":"#FDAD3C","label":"11%","label-colour":"#FFFFFF","font-size":14},
+                {"value":35,"alpha":1,"colour":"#27C1B9","label":"35%","label-colour":"#FFFFFF","font-size":14}
+            ]
+        }
+
+    ]
+}

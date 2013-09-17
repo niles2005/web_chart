@@ -1,0 +1,75 @@
+{
+    "legend":{"position":"right","visible":true,"icon":"circle"},
+    "bg_colour": "#FFFFFF",
+    "elements":[
+        {
+             "keys": [
+        {"colour":"#FF0000", "text":"长江路/中山路 饱和度 0.6", "font-size": 10}],
+            "type":      "pie",            
+            "border":    2,
+            "hale-pos-rate":0.6,
+            "split-line-outer":0.8,
+            "split-line-inner":0.4,
+            "tip": "#label#",
+            "start-angle": -90,
+            "radius": 100,
+            "values" :   [
+                {"value":4,"alpha":0.1,"colour":"#356aa0"},
+                {"value":6,"alpha":1,"colour":"#356aa0"}
+            ]
+        },
+        {
+              "keys": [
+        {"colour":"#00FF00", "text":"长江路/中山路 饱和度 0.6", "font-size": 10}],
+            
+            "type":      "pie",           
+            "border":    2,
+            "hale-pos-rate":0.7,
+            "label":"",
+            "split-line-outer":0.8,
+            "split-line-inner":0.4,
+            "tip":         "#label#",
+            "start-angle": -90,
+            "radius": 85,
+            "values" :   [
+                {"value":75,"alpha":0.1,"colour":"#FF0000"},
+                {"value":25,"alpha":1,"colour":"#FF0000"}
+            ]
+        },
+         {
+             "keys": [
+        {"colour":"#0000FF", "text":"长江路/中山路 饱和度 0.6", "font-size": 10}],
+            "type":      "pie",           
+            "border":    2,
+            "hale-pos-rate":0.7,
+            "label-pos-rate":0.8,
+            "split-line-outer":0.8,
+            "split-line-inner":0.4,
+            "tip":         "#label#",
+            "start-angle": -90,
+            "radius": 75,
+            "values" :   [
+                {"value":8,"alpha":0.1,"colour":"#eedf0e","label":"70%","label-colour":"#FFFFFF","font-size":10},
+                {"value":2,"alpha":1,"colour":"#eedf0e","label":"25%","label-colour":"#FFFFFF","font-size":10}               
+            ]
+        },
+        {
+             "keys": [
+        {"colour":"#000000", "text":"长江路/中山路 饱和度 0.6", "font-size": 10}],
+            "type":      "pie",           
+            "border":    2,
+            "hale-pos-rate":0.6,
+            "label-pos-rate":0.6,
+            "split-line-outer":0.8,
+            "split-line-inner":0.4,
+            "tip":         "#label#",
+            "start-angle": -90,
+            "radius": 60,
+            "values" :   [
+                {"value":85,"alpha":0.1,"colour":"#00FF00","label":"70%","label-colour":"#FFFFFF","font-size":10},
+                {"value":15,"alpha":1,"colour":"#00FF00","label":"10%","label-colour":"#FFFFFF","font-size":10}               
+            ]
+        }
+        
+    ]
+}

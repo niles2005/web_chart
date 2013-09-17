@@ -1,0 +1,25 @@
+///{url=http://127.0.0.1:8080/web_chart/json?getJson=roadnetBottleneckChart}
+///[colors=#5DC9E6,#1C99D3,#E95150,#FDAD3C,#27C1B9,#5DC9E6,#F2CE3C]
+{
+	"bg_colour":"#FFFFFF",
+	"elements":[{
+		"border":0,
+		"hole-pos-rate":0.5,
+		"keys":[
+			***{"colour":"$$colors.$index$$","font-size":12,"text":"$$name $$"},
+		],
+		"label-pos-rate":0.78,
+		"split-line-width":3.0,
+		"start-angle":-90,
+		"tip":"#label#",
+		"type":"pie",
+		"values":[
+			***{"alpha":1,"colour":"$$colors.$index$$","font-size":14,"label":"$$congest$$","label-colour":"#FFFFFF","value":$$congest$$},
+		]
+	}],
+	"legend":{
+		"icon":"circle",
+		"position":"right",
+		"visible":true
+	}
+}

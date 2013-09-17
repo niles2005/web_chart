@@ -1,0 +1,4 @@
+{ "title":{
+    "text":"Pie for you sir?",
+    "style":"{font-size: 10px;}"
+  }, "elements": [{ "type": "pie", "animate": [ { "type": "fade" } ], "label-colour": "#432BAF", "alpha": 0.75, "tip": "#label#    $#val# (#percent#)", "no-labels": true, "colours": [ "#FF0000", "#FF5973", "#6D86CC" ], "values": [ { "value": 120, "label": "Income" }, { "value": 99, "label": "Spend" }, { "value": 21, "label": "Profit" } ] } ] }

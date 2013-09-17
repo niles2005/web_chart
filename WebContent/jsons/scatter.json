@@ -1,0 +1,59 @@
+{
+    "legend":{"position":"top","visible":true,"icon":"pointline","align":"center"},
+    "elements": [
+    {
+        "type": "line",
+        "colour": "#4998DB",
+        "width":1,
+        "dot-style": {
+            "type": "hollow-dot",
+            "dot-size":3,
+            "halo-size": 2
+        },
+        "values": [15,30,15,10,25,20,10,15,20,10,15,10,15],
+        "text": "快速路",
+        "font-size": 10
+    },
+    {
+        "type": "line",
+        "colour": "#FEBE66",
+        "width": 1,
+        "dot-style": {
+            "type": "hollow-dot",
+            "dot-size": 3,
+            "halo-size": 2
+        },
+        "values": [25,12,15,25,15,15,38,25,35,5,17,15,25],
+        "text": "主干道",
+        "font-size": 10
+    },
+    {
+        "type": "line",
+        "colour": "#5DC8E8",
+        "width": 1,
+        "dot-style": {
+            "type": "ball",
+            "dot-size": 3.5
+        },
+        "text": "次干道",
+        "font-size": 10,
+        "values": [29,24,36,18,11,26,19,26,29,15,11,25,39]
+    }
+],
+    "x_axis": {
+        "max":12,
+        "min":0,
+        "grid-colour": "#DEDEE6",
+        "colour":  "#DEDEE6",
+        "grid-colour": "#DEDEE6",
+        "labels": { "rotate": 0, "labels": [ {"x":0,"text":"7:00"}, {"x":1,"text":""}, {"x":2,"text":"7:10"}, {"x":3,"text":""},  {"x":4,"text":"7:20"}, {"x":5,"text":""}, {"x":6,"text":"7:30"}, {"x":7,"text":""}, {"x":8,"text":"7:40"}, {"x":9,"text":""}, {"x":10,"text":"7:50"}, {"x":11,"text":""},  {"x":12,"text":"8:00"} ] }
+},
+    "y_axis": {
+    "min": 0,
+    "max": 40,
+    "steps":5,
+    "stroke": 0,
+    "grid-colour": "#DEDEE6"
+},
+   "bg_colour":"#ffffff"
+}

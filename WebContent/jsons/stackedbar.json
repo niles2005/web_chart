@@ -1,0 +1,22 @@
+{ "elements": [ { "alpha":1,"barwidth":0.4,"type": "bar_stack", "colours": [ "#FF0000","#eedf0e", "#27c1b5" ], "keys": [ { "colour": "#FF0000", "text": "拥堵", "font-size": 13 }, { "colour": "#eedf0e", "text": "缓慢", "font-size": 13 }, { "colour": "#27c1b5", "text": "畅通", "font-size": 13 } ], "values": [ [ 25, 15,60 ], [ 25, 13,62 ], [ 25, 12,63 ], [ 25, 11,64 ], [ 22, 14,64 ], [ 22, 14,64 ], [ 25, 11,64 ], [ 25, 10,65 ], [ 25, 10,65 ], [ 20, 13,67 ], [ 20, 10,70 ], [ 20, 10,70 ], [ 20, 9,71 ] ], "tip": "In #x_label# you get #total# days holiday a year.Number of days: #val#", "on-show": { "type": "pop", "cascade": 1, "delay": 0.5 } } ],
+    "x_axis": {
+        "max":12,
+        "min":0,
+        "steps":2,
+        "stroke": 1,
+        "colour":  "#DEDEE6",
+        "grid-colour": "#DEDEE6",
+        "labels": { "rotate": 0, "labels": [ {"x":0,"text":"7:00"},  {"x":2,"text":"7:10"},  {"x":4,"text":"7:20"}, {"x":6,"text":"7:30"}, {"x":8,"text":"7:40"}, {"x":10,"text":"7:50"},  {"x":12,"text":"8:00"} ] }
+    },
+    "y_axis":{
+        "grid-colour": "#DEDEE6",
+     "labels": {
+        "labels": [{"y":100,"text":"100%"},{"y":80,"text":"80%"},{"y":60,"text":"60%"},{"y":40,"text":"40%"},
+	  {"y":20,"text":"20%"}, {"y":0,"text":"0"}]
+    },
+    "stroke": 0,
+    "tick-length": 4,
+	"max":100,
+	"min":0,
+	"offset":0
+  },"tooltip": { "mouse": 2 },"bg_colour": "#FFFFFF" }
