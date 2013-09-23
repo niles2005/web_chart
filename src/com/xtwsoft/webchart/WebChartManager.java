@@ -10,7 +10,8 @@ import com.xtwsoft.images.GIF;
 import com.xtwsoft.images.ImageFormat;
 import com.xtwsoft.images.MinimapImage;
 import com.xtwsoft.images.PNG8;
-import com.xtwsoft.webchart.charts.DashboardChart;
+import com.xtwsoft.webchart.charts.WeekCircleChart;
+import com.xtwsoft.webchart.charts.ServiceChart;
 import com.xtwsoft.webchart.charts.PieChart;
 
 public class WebChartManager {
@@ -28,13 +29,20 @@ public class WebChartManager {
 	
 	protected ImageFormat m_imageFormat = new ImageFormat();
 	
-	private void drawChart(Graphics2D g2,JSONObject chartData,int imageWidth,int imageHeight) {
-		Color bgColor = ChartUtil.getColor(chartData.getString("bg_colour"));
+	public void drawChart(Graphics2D g2,JSONObject chartData,int imageWidth,int imageHeight) {
+		Color bgColor = null;
+		if(chartData != null) {
+			bgColor = ChartUtil.getColor(chartData.getString("bg_colour"));
+		}
 		if(bgColor == null) {
 			bgColor = Color.white;
 		}
 		g2.setColor(bgColor);
 		g2.fillRect(0, 0, imageWidth, imageHeight);
+		
+		if(chartData == null) {
+			return;
+		}
 		
 		JSONArray jsonArray = chartData.getJSONArray("elements");
 		if(jsonArray.size() > 0) {
@@ -42,8 +50,10 @@ public class WebChartManager {
 			String type = element.getString("type");
 			if("pie".equals(type)) {
 				new PieChart().drawElement(g2,imageWidth,imageHeight,element);
-			} else if("dashboard".equals(type)) {
-				new DashboardChart().drawElement(g2,imageWidth,imageHeight,element);
+			} else if("weekCircle".equals(type)) {
+				new WeekCircleChart().drawElement(g2,imageWidth,imageHeight,element);
+			} else if("service".equals(type)) {
+				new ServiceChart().drawElement(g2,imageWidth,imageHeight,element);
 			}
 		}
 	}

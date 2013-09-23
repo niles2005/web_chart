@@ -1,0 +1,20 @@
+///{url=http://127.0.0.1/%E9%A6%96%E9%A1%B5.page/weekTotalInfo.json}
+///[colors=#EC7473,#FDBE61,#F8E36E,#53CCC5,#48ADDB,#7ED5E9,#B076CB]
+{
+	"bg_colour":"#FFFFFF",
+	"elements":[{
+		"border":0,
+		"keys":[
+			***{"colour":"$$colors.$index$$","font-size":13,"text":"$$name$$"},
+		],
+		"type":"weekCircle",
+		"values":[
+			***{"alpha":1,"colour":"$$colors.$index$$","font-size":14,"value":$$value$$},
+		]
+	}],
+	"legend":{
+		"icon":"circle",
+		"position":"right",
+		"visible":true
+	}
+}

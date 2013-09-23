@@ -5,6 +5,37 @@ import java.io.File;
 import java.lang.reflect.Field;
 
 public class ChartUtil {
+	public static Color getColor(String colorString,double alpha) {
+		if(colorString == null) {
+			return null;
+		}
+		if(colorString.startsWith("#") && colorString.length() == 7) {
+			int colorValue = Integer.parseInt(colorString.substring(1),16);
+			Color c = new Color(colorValue);
+			if(alpha >= 1 || alpha <= 0) {
+				return c;
+			}
+			if(alpha != 1) {
+				c = new Color(c.getRed(),c.getGreen(),c.getBlue(),(int)(255 * alpha));
+			}
+			return c;
+		}
+		try {
+			Field field = Color.class.getField(colorString);
+			Color c = (Color)field.get(null);
+			if(alpha >= 1 || alpha <= 0) {
+				return c;
+			}
+			if(alpha != 1) {
+				c = new Color(c.getRed(),c.getGreen(),c.getBlue(),(int)(255 * alpha));
+			}
+			return c;
+		} catch(Exception ex) {
+			ex.printStackTrace();
+			return null;
+		}
+	}
+	
 	public static Color getColor(String colorString) {
 		if(colorString == null) {
 			return null;

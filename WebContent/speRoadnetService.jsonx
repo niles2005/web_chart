@@ -1,0 +1,29 @@
+///{"serviceDegree":"A"}
+///{url=http://127.0.0.1/%E4%BA%A4%E9%80%9A%E7%8A%B6%E6%80%81%E7%BB%BC%E5%90%88%E7%9B%91%E6%B5%8B/%E9%87%8D%E7%82%B9%E8%B7%AF%E6%AE%B5%E7%BB%BC%E5%90%88%E6%80%81%E5%8A%BF.page/speRoadnetService.json}
+///[colors=#EC7473,#FDBE61,#F8E36E,#53CCC5,#48ADDB,#7ED5E9,#B076CB]
+{
+	"bg_colour":"#FFFFFF",
+	"elements":[{
+		"border":0,
+		"keys":[
+			{"colour":"#EC7473","font-size":13,"text":"A"},
+			{"colour":"#FDBE61","font-size":13,"text":"B"},
+			{"colour":"#F8E36E","font-size":13,"text":"C"},
+			{"colour":"#53CCC5","font-size":13,"text":"D"},
+			{"colour":"#48ADDB","font-size":13,"text":"E"},
+		],
+		"type":"service",
+		"hole-pos-rate":0.5,
+		"island-pos-rate":0.15,
+		"split-line-width":3.0,
+		"pointer-pos-rate":0.75,
+		"values":[
+			***{"alpha":1,"font-size":24,"value":"$$serviceDegree$$"},
+		]
+	}],
+	"legend":{
+		"icon":"circle",
+		"position":"right",
+		"visible":true
+	}
+}

@@ -1,4 +1,4 @@
-///{url=http://127.0.0.1:8080/web_chart/json?getJson=roadnetBottleneckChart}
+///{url=http://127.0.0.1/%E4%BA%A4%E9%80%9A%E7%8A%B6%E6%80%81%E7%BB%BC%E5%90%88%E7%9B%91%E6%B5%8B/%E8%B7%AF%E7%BD%91%E4%BA%A4%E9%80%9A%E7%BB%BC%E5%90%88%E6%80%81%E5%8A%BF.page/roadnetBottleneckChart.json}
 ///[colors=#5DC9E6,#1C99D3,#E95150,#FDAD3C,#27C1B9,#5DC9E6,#F2CE3C]
 {
 	"bg_colour":"#FFFFFF",
