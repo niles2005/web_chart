@@ -9,12 +9,16 @@ import java.awt.Graphics2D;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
@@ -24,7 +28,6 @@ import com.alibaba.fastjson.JSONObject;
 
 public class TestImage extends JFrame {
     private static boolean packFrame = false;
-
     public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -72,8 +75,19 @@ public class TestImage extends JFrame {
         contentPane = (JPanel) this.getContentPane();
         contentPane.setLayout(borderLayout1);
         this.setBackground(Color.white);
-        this.setSize(new Dimension(400, 300));
+        this.setSize(new Dimension(500, 400));
         this.setTitle("Visitors Tester");
+        final JComboBox comboBox = new JComboBox();
+        comboBox.addItemListener(new ItemListener() {
+        	public void itemStateChanged(ItemEvent e) {
+        		if ((e.getStateChange() == ItemEvent.SELECTED)) {
+        			UrlItem selectUrlItem = (UrlItem)comboBox.getSelectedItem();
+        			m_panel.selectUrlItem(selectUrlItem);
+        		}
+        	}
+        });
+        contentPane.add(comboBox,BorderLayout.SOUTH);
+
         JButton btn = new JButton("refresh");
         contentPane.add(btn,BorderLayout.NORTH);
         btn.addActionListener(new ActionListener() {
@@ -82,6 +96,17 @@ public class TestImage extends JFrame {
         	}
         });
         contentPane.add(m_panel,BorderLayout.CENTER);
+        
+        ArrayList urlItemList = new ArrayList();
+        urlItemList.add(new UrlItem("http://127.0.0.1/%E9%A6%96%E9%A1%B5.page/weekCircleChart.jsonx"));
+        urlItemList.add(new UrlItem("http://127.0.0.1/%E4%BA%A4%E9%80%9A%E7%8A%B6%E6%80%81%E7%BB%BC%E5%90%88%E7%9B%91%E6%B5%8B/%E8%B7%AF%E7%BD%91%E4%BA%A4%E9%80%9A%E7%BB%BC%E5%90%88%E6%80%81%E5%8A%BF.page/pie-1.jsonx"));
+        urlItemList.add(new UrlItem("http://127.0.0.1/%E4%BA%A4%E9%80%9A%E7%8A%B6%E6%80%81%E7%BB%BC%E5%90%88%E7%9B%91%E6%B5%8B/%E8%B7%AF%E7%BD%91%E4%BA%A4%E9%80%9A%E7%BB%BC%E5%90%88%E6%80%81%E5%8A%BF.page/roadnetBottleneckChart.jsonx"));
+        urlItemList.add(new UrlItem("http://127.0.0.1/%E4%BA%A4%E9%80%9A%E7%8A%B6%E6%80%81%E7%BB%BC%E5%90%88%E7%9B%91%E6%B5%8B/%E9%87%8D%E7%82%B9%E8%B7%AF%E6%AE%B5%E7%BB%BC%E5%90%88%E6%80%81%E5%8A%BF.page/speRoadStatus.jsonx"));
+        urlItemList.add(new UrlItem("http://127.0.0.1/%E4%BA%A4%E9%80%9A%E7%8A%B6%E6%80%81%E7%BB%BC%E5%90%88%E7%9B%91%E6%B5%8B/%E9%87%8D%E7%82%B9%E8%B7%AF%E6%AE%B5%E7%BB%BC%E5%90%88%E6%80%81%E5%8A%BF.page/speRoadnetService.jsonx"));
+        
+        for(int i=0;i<urlItemList.size();i++) {
+        	comboBox.addItem(urlItemList.get(i));
+        }
     }
     
     
@@ -97,21 +122,43 @@ public class TestImage extends JFrame {
     }
     
 }
+
+class UrlItem {
+	String name = null;
+	String url = null;
+	public UrlItem(String name,String url) {
+		this.name = name;
+		this.url = url;
+	}
+	
+	public UrlItem(String url) {
+		this.url = url;
+		int pos = url.lastIndexOf("/");
+		if(pos != -1) {
+			name = url.substring(pos + 1);
+		} else {
+			name = url;
+		}
+	}
+	
+	public String getUrl() {
+		return url;
+	}
+	
+	public String toString() {
+		return name;
+	}
+}
 //运行时需启动wuproject
 class TestPanel extends JPanel {
-//	String jsonx = "roadnetBottleneckChart.jsonx";
-//	String jsonx = "weekCircleChart.jsonx";
-
-	//pie no hole
-//	String jsonUrl = "http://127.0.0.1/%E4%BA%A4%E9%80%9A%E7%8A%B6%E6%80%81%E7%BB%BC%E5%90%88%E7%9B%91%E6%B5%8B/%E8%B7%AF%E7%BD%91%E4%BA%A4%E9%80%9A%E7%BB%BC%E5%90%88%E6%80%81%E5%8A%BF.page/pie-1.jsonx";
-	
-	//pie with hole
-//	String jsonUrl = "http://127.0.0.1/%E4%BA%A4%E9%80%9A%E7%8A%B6%E6%80%81%E7%BB%BC%E5%90%88%E7%9B%91%E6%B5%8B/%E8%B7%AF%E7%BD%91%E4%BA%A4%E9%80%9A%E7%BB%BC%E5%90%88%E6%80%81%E5%8A%BF.page/roadnetBottleneckChart.jsonx";
-	
-	//service
-	String jsonUrl = "http://127.0.0.1/%E4%BA%A4%E9%80%9A%E7%8A%B6%E6%80%81%E7%BB%BC%E5%90%88%E7%9B%91%E6%B5%8B/%E9%87%8D%E7%82%B9%E8%B7%AF%E6%AE%B5%E7%BB%BC%E5%90%88%E6%80%81%E5%8A%BF.page/speRoadnetService.jsonx";
 	private JSONObject chartData = null;
 	public TestPanel() {
+		doRefresh();
+	}
+	
+	private UrlItem m_item = null;
+	public void selectUrlItem(UrlItem item) {
+		m_item = item;
 		doRefresh();
 	}
 	
@@ -131,7 +178,10 @@ class TestPanel extends JPanel {
 	
 	private String getJSONContent() {
 		try {
-			URL url = new URL(jsonUrl);
+			if(m_item == null) {
+				return null;
+			}
+			URL url = new URL(m_item.getUrl());
 			BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream(),"UTF-8"));
 			StringBuffer strBuff = new StringBuffer();
 			String line = reader.readLine();

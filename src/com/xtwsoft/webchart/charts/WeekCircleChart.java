@@ -15,8 +15,10 @@ import com.xtwsoft.webchart.ChartUtil;
 
 
 public class WeekCircleChart extends BaseChart {
-	public WeekCircleChart() {
+	public WeekCircleChart(JSONObject element,JSONObject legend,int imageWidth,int imageHeight) {
+		super(element,legend,imageWidth,imageHeight);
 	}
+	
 	static float dash1[] = {1.2f};
 	static BasicStroke dashed = new BasicStroke(0.5f,
             BasicStroke.CAP_BUTT,
@@ -26,13 +28,13 @@ public class WeekCircleChart extends BaseChart {
 	private int legendFlagWidth = 9;
 	private int legendFlagMargin = 10;//legend图标和字符间�?
 
-	public void drawElement(Graphics2D g2,int width,int height,JSONObject element) {
+	public void draw(Graphics2D g2) {
 		double legendHeight = 0;
 		double legendWidth = 0;
-		JSONArray keys = element.getJSONArray("keys");
+		
 		Font bakFont = g2.getFont();
-		for(int i=0;i<keys.size();i++) {
-			JSONObject key = keys.getJSONObject(i);
+		for(int i=0;i<m_keys.size();i++) {
+			JSONObject key = m_keys.getJSONObject(i);
 			
 			String strFontSize = key.getString("font-size");
 			if(strFontSize != null) {
@@ -50,49 +52,53 @@ public class WeekCircleChart extends BaseChart {
 		legendWidth += legendFlagWidth + legendFlagMargin;
 		
 		int pieRadius = 0;
-		int legendRectX = height;
-		int legendRectWidth = width - height;
+		int legendRectX = m_imageHeight;
+		int legendRectWidth = m_imageWidth - m_imageHeight;
 		int legendRectY = 0;
-		int legendRectHeight = height;
+		int legendRectHeight = m_imageHeight;
 		
 		int pieWidth = 0;
 		
-		legendRectX = width - legendRectWidth;
-		if(width > height + legendWidth) {
-			pieWidth = height;
-			legendRectX = height;
+		legendRectX = m_imageWidth - legendRectWidth;
+		if(m_imageWidth > m_imageHeight + legendWidth) {
+			pieWidth = m_imageHeight;
+			legendRectX = m_imageHeight;
 			pieRadius = (int)(pieWidth / 2 * 0.9);
-			legendRectWidth = width - height;
-		} else if(width > legendWidth) {
-			pieWidth = (int)((width - legendWidth));
-			if(pieWidth < width / 2) {
-				pieWidth = (int)(width  / 2);
+			legendRectWidth = m_imageWidth - m_imageHeight;
+		} else if(m_imageWidth > legendWidth) {
+			pieWidth = (int)((m_imageWidth - legendWidth));
+			if(pieWidth < m_imageWidth / 2) {
+				pieWidth = (int)(m_imageWidth  / 2);
 				pieRadius = (int)(pieWidth / 2 * 0.9);
-				legendRectX = (int)(width  / 2);
+				legendRectX = (int)(m_imageWidth  / 2);
 				legendRectWidth = (int)legendWidth;
 			} else {
 				pieRadius = (int)(pieWidth / 2 * 0.9);
-				legendRectX = (int)(width - legendWidth);
+				legendRectX = (int)(m_imageWidth - legendWidth);
 				legendRectWidth = (int)legendWidth;
 			}
 		} else {
-			pieWidth = (int)(width  / 2);
+			pieWidth = (int)(m_imageWidth  / 2);
 			pieRadius = (int)(pieWidth / 2 * 0.9);
-			legendRectX = (int)(width  / 2);
+			legendRectX = (int)(m_imageWidth  / 2);
 			legendRectWidth = (int)legendWidth;
 		}
 		
-		g2.translate(pieWidth / 2, height /2);
+		g2.translate(pieWidth / 2, m_imageHeight /2);
 		
 		
-		drawCircle(g2,width,height,element,pieRadius);
+		drawCircle(g2,pieRadius);
 		
-		g2.translate(-pieWidth / 2, -height /2);
+		g2.translate(-pieWidth / 2, -m_imageHeight /2);
 		
-		drawLegend(g2,legendRectX,legendRectY,legendRectWidth,legendRectHeight,legendWidth,legendHeight,element);
+		//图形部分宽度
+		int graphWidth = pieRadius * 2;
+		//图形部分高度
+		int graphHeight = pieRadius * 2;
+		drawLegend(g2,legendRectX,legendRectY,legendRectWidth,legendRectHeight,legendWidth,legendHeight,graphWidth,graphHeight);
 	}
 	
-	private void drawCircle(Graphics2D g2,int width,int height,JSONObject element,int pieRadius) {
+	private void drawCircle(Graphics2D g2,int pieRadius) {
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		Font oldFont = g2.getFont();
 		Font newFont = new Font(Font.SANS_SERIF, Font.PLAIN, 10);
@@ -100,11 +106,8 @@ public class WeekCircleChart extends BaseChart {
 		FontMetrics fm = g2.getFontMetrics();
 		Rectangle2D timeLabelRect = fm.getStringBounds("06:00", g2);
 		
-		JSONArray values = element.getJSONArray("values");
-		
 		int r = pieRadius - (int)(timeLabelRect.getWidth());
-		int circleNum = values.size();
-		Stroke defaultStroke = g2.getStroke();
+		int circleNum = m_values.size();
 		g2.setStroke(dashed);
 		g2.setColor(Color.gray);
 		int drawCircleNum = circleNum + 1;
@@ -161,8 +164,8 @@ public class WeekCircleChart extends BaseChart {
 			g2.drawString(labelString, (int)x, (int)y );
 		}
 		
-		for(int i=0;i<values.size();i++) {
-			JSONObject item = values.getJSONObject(i);
+		for(int i=0;i<m_values.size();i++) {
+			JSONObject item = m_values.getJSONObject(i);
 			JSONArray valueArr = item.getJSONArray("value");
 			int cr = (int)(1.0 * (drawCircleNum - i) / drawCircleNum * r);
 			g2.setColor(ChartUtil.getColor(item.getString("colour")));
@@ -188,41 +191,4 @@ public class WeekCircleChart extends BaseChart {
 		g2.setFont(oldFont);
 	}
 	
-	private void drawLegend(Graphics2D g2,int rectX,int rectY,int rectWidth,int rectHeight,double legendWidth,double legendHeight,JSONObject element) {
-		JSONArray keys = element.getJSONArray("keys");
-		int rr = legendFlagWidth;
-		double drawPartWidth = legendWidth + legendFlagWidth + legendFlagMargin;   
-
-		int x = rr /2;
-		int y = 0;
-		double labelX = rectX + rectWidth / 2 - drawPartWidth / 2;
-		double labelY = rectHeight/2-legendHeight / 2;
-		g2.translate(labelX, labelY);
-
-		double labelHeight = 0;
-		Font bakFont = g2.getFont();
-		for(int i=0;i<keys.size();i++) {
-			JSONObject key = keys.getJSONObject(i);
-			g2.setColor(ChartUtil.getColor(key.getString("colour")));
-			String strFontSize = key.getString("font-size");
-			if(strFontSize != null) {
-				float fontSize = Float.parseFloat(strFontSize);
-				g2.setFont(bakFont.deriveFont(fontSize));
-			}
-			String text = key.getString("text");
-			
-			FontMetrics fm = g2.getFontMetrics();
-			Rectangle2D rect = fm.getStringBounds(text, g2);
-			labelHeight = rect.getHeight();
-			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-			g2.fillOval(x, (int)(y + (labelHeight + fm.getLeading())/ 2) - rr / 2, rr, rr);
-			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
-			
-			g2.drawString(text, x + legendFlagWidth + legendFlagMargin, y+ fm.getAscent());
-			 
-			y += labelHeight + fm.getLeading();
-		}	
-	}
-	
-
 }

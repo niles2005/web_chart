@@ -1,6 +1,7 @@
 package com.xtwsoft.webchart;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
@@ -44,16 +45,18 @@ public class WebChartManager {
 			return;
 		}
 		
+		JSONObject legend = chartData.getJSONObject("legend");
+		
 		JSONArray jsonArray = chartData.getJSONArray("elements");
 		if(jsonArray.size() > 0) {
 			JSONObject element = jsonArray.getJSONObject(0);
 			String type = element.getString("type");
 			if("pie".equals(type)) {
-				new PieChart().drawElement(g2,imageWidth,imageHeight,element);
+				new PieChart(element,legend,imageWidth,imageHeight).draw(g2);
 			} else if("weekCircle".equals(type)) {
-				new WeekCircleChart().drawElement(g2,imageWidth,imageHeight,element);
+				new WeekCircleChart(element,legend,imageWidth,imageHeight).draw(g2);
 			} else if("service".equals(type)) {
-				new ServiceChart().drawElement(g2,imageWidth,imageHeight,element);
+				new ServiceChart(element,legend,imageWidth,imageHeight).draw(g2);
 			}
 		}
 	}
