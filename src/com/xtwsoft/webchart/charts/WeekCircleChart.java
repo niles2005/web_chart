@@ -168,7 +168,8 @@ public class WeekCircleChart extends BaseChart {
 			JSONObject item = m_values.getJSONObject(i);
 			JSONArray valueArr = item.getJSONArray("value");
 			int cr = (int)(1.0 * (drawCircleNum - i) / drawCircleNum * r);
-			g2.setColor(ChartUtil.getColor(item.getString("colour")));
+			float alpha = this.getFloat(item, "alpha",0.65f);
+			g2.setColor(ChartUtil.getColor(item.getString("colour"),alpha));
 
 			for(int j=0;j<valueArr.size();j++) {
 				if(j < 24) {
