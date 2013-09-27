@@ -30,20 +30,7 @@ public abstract class BaseChart {
 	public abstract void draw(Graphics2D g2);
 	
 	public double getDouble(JSONObject object,String name) {
-		Object value = object.get(name);
-		if(value == null) {
-			return 0;
-		}
-		if(value instanceof BigDecimal) {
-			return ((BigDecimal)value).doubleValue();
-		} else if(value instanceof Double) {
-			return (Double)value;
-		} else if(value instanceof Float) {
-			return (Double)value;
-		} else if(value instanceof Integer) {
-			return (Integer)value;
-		}
-		return 0;
+		return getDouble(object,name,0);
 	}
 	
 	public double getDouble(JSONObject object,String name,double defaultValue) {
@@ -61,23 +48,9 @@ public abstract class BaseChart {
 			return (Integer)value;
 		}
 		return defaultValue;
-	}
-
+	}	
 	public float getFloat(JSONObject object,String name) {
-		Object value = object.get(name);
-		if(value == null) {
-			return 0;
-		}
-		if(value instanceof BigDecimal) {
-			return ((BigDecimal)value).floatValue();
-		} else if(value instanceof Double) {
-			return (Float)value;
-		} else if(value instanceof Float) {
-			return (Float)value;
-		} else if(value instanceof Integer) {
-			return (Integer)value;
-		}
-		return 0;
+		return getFloat(object,name,0);
 	}
 	
 
@@ -96,17 +69,31 @@ public abstract class BaseChart {
 			return (Integer)value;
 		}
 		return defaultValue;
+	}	
+	
+	public int getInt(JSONObject object,String name) {
+		return getInt(object,name,0);
 	}
 	
 
-	public double getInt(JSONObject object,String name) {
-		Object splitLineWidth = object.get("split-line-width");
-		if(splitLineWidth == null) {
-			return 0;
+	public int getInt(JSONObject object,String name,int defaultValue) {
+		Object value = object.get(name);
+		if(value == null) {
+			return defaultValue;
 		}
-		return object.getDouble("split-line-width");
-	}
+		if(value instanceof BigDecimal) {
+			return ((BigDecimal)value).intValue();
+		} else if(value instanceof Double) {
+			return ((Double)value).intValue();
+		} else if(value instanceof Float) {
+			return ((Float)value).intValue();
+		} else if(value instanceof Integer) {
+			return (Integer)value;
+		}
+		return defaultValue;
+	}		
 	
+
 	public Color getColor(JSONObject object,String name,Color defaultColor) {
 		Color color = ChartUtil.getColor(object.getString(name));		
 		if(color == null) {

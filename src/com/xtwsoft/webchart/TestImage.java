@@ -205,8 +205,8 @@ class TestPanel extends JPanel {
 			g2.setColor(Color.LIGHT_GRAY);
 			Dimension size = this.getSize();
 			g2.fillRect(0, 0, size.width, size.height);
-//			g2.translate(0, 10);
-			WebChartManager.getInstance().drawChart(g2,chartData,380,250);
+			g2.translate(10, 10);
+			WebChartManager.getInstance().drawChart(g2,chartData,size.width - 20, size.height - 20);
 		}
 	}
 }
