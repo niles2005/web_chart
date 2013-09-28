@@ -30,9 +30,12 @@ public abstract class BaseVmlChart {
 	protected JSONArray m_values = null;
 	protected int m_width;//图片宽
 	protected int m_height;//图片高
-	
+	protected JSONObject m_chartData = null;
 	
 	public BaseVmlChart(JSONObject chartData,int width,int height) {
+		m_chartData = chartData;
+		m_width = width;
+		m_height = height;
 		m_gridMarginLeft = getInt(chartData,"grid-margin-left");
 		m_gridMarginRight = getInt(chartData,"grid-margin-right");
 		m_gridMarginTop = getInt(chartData,"grid-margin-top");
@@ -44,14 +47,12 @@ public abstract class BaseVmlChart {
 		m_values = chartData.getJSONArray("values");
 		m_keys = chartData.getJSONArray("keys");
 		
-		m_xAxis = chartData.getJSONObject("x_axis");
+		m_xAxis = chartData.getJSONObject("x-axis");
 		m_xLabels = m_xAxis.getJSONArray("labels");
 
-		m_yAxis = chartData.getJSONObject("y_axis");
+		m_yAxis = chartData.getJSONObject("y-axis");
 		m_yLabels = m_yAxis.getJSONArray("labels");
 		
-		m_width = width;
-		m_height = height;
 		
 		
 		m_yMin = this.m_yAxis.getFloat("min");
@@ -148,5 +149,61 @@ public abstract class BaseVmlChart {
 		}
 	}		
 	
-	public abstract String buildChart();
+	protected int getYPos(float value) {
+        double rate = 1.0 * (value - m_yMin) / m_yMax;
+        return (int)(m_gridY + m_gridH - rate * m_gridH);
+    }
+
+    protected void drawLine(StringBuffer strBuff,int x1,int y1,int x2,int y2,String color,String strokeWeight,boolean isDash) {
+    	String from = x1 + "," + y1;
+    	String to = x2 + "," + y2;
+    	strBuff.append("<v:line from = '" + from + "' to = '" + to + "' strokecolor = '" + color + "' strokeweight = '" + strokeWeight + "'>\r\n");
+    	if(isDash) {
+    		strBuff.append("<v:stroke dashstyle = 'dot'>\r\n");
+			strBuff.append("</v:stroke>\r\n");
+    	}                
+    	strBuff.append("</v:line>\r\n");
+    }
+    
+    protected void drawLabel(StringBuffer strBuff,int x,int y,String text,String fontSize) {
+    	if(text == null || text.length() == 0) {
+    		return;
+    	}
+    	strBuff.append("<v:rect style=' WIDTH: 50px;  HEIGHT: 23px; TOP: " + y + "px; PADDING-TOP: 0px; LEFT: " + x + "px' coordsize = '21600,21600' stroked = 'f'>\r\n");
+		strBuff.append("<v:stroke opacity = '0'>\r\n");
+		strBuff.append("</v:stroke>\r\n");
+		strBuff.append("<v:fill opacity = '0'>\r\n");
+		strBuff.append("</v:fill>\r\n");
+		strBuff.append("<v:textbox style=' FONT: " + fontSize + "pt Calibri; '>" + text + "</v:textbox>\r\n");
+		strBuff.append("</v:rect>\r\n");
+     }    
+    
+	protected void drawTitles(StringBuffer strBuff) {
+		strBuff.append("<div style='width: " + m_width + "px;position:relative;margin:0 auto;text-align:center;'>\r\n");
+		String legendIcon = this.m_legend.getString("icon");
+		String iconStyle = "display: inline-block;width: 23px;height: 16px;vertical-align: top;background-image: url(/images/" + legendIcon + ".png);background-repeat: no-repeat;";
+		for(int i=0;i<m_keys.size();i++) {
+			JSONObject key = m_keys.getJSONObject(i);
+			String colour = key.getString("colour");
+			String text = key.getString("text");
+
+			strBuff.append("<i style='" + iconStyle + "background-color:" + colour + "'></i><span>" + text + "</span>\r\n");
+		}		
+		strBuff.append("</div>\r\n");
+	}
+	
+	public String buildChart() {
+		StringBuffer strBuff = new StringBuffer();
+		drawTitles(strBuff);
+		strBuff.append("<div style='width:" + m_width + "px;position:relative;margin:0 auto;'>\r\n");
+		strBuff.append("<v:group style='WIDTH: " + m_width + "px; HEIGHT: " + m_height + "px' coordsize = '" + m_width + "," + m_height + "'>\r\n");
+		drawChart(strBuff);
+		strBuff.append("</v:group>\r\n");
+		strBuff.append("</div>\r\n");
+		
+		return strBuff.toString();
+	}
+	
+	
+    public abstract void drawChart(StringBuffer strBuff);
 }
