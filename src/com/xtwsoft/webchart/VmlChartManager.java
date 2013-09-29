@@ -1,8 +1,8 @@
 package com.xtwsoft.webchart;
 
 import com.alibaba.fastjson.JSONObject;
-import com.xtwsoft.wuproject.vmlChart.VmlBarStackChart;
-import com.xtwsoft.wuproject.vmlChart.VmlLineChart;
+import com.xtwsoft.webchart.vmlChart.VmlBarStackChart;
+import com.xtwsoft.webchart.vmlChart.VmlLineChart;
 
 
 public class VmlChartManager {
