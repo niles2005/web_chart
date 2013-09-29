@@ -78,7 +78,6 @@ public abstract class BaseVmlChart {
 			m_yMax = this.m_yAxis.getFloat("max");
 		}
 		
-		
 		m_gridX = m_gridMarginLeft;
 		m_gridY = m_gridMarginTop;
 		m_gridW = width - m_gridMarginLeft - m_gridMarginRight;
@@ -217,7 +216,14 @@ public abstract class BaseVmlChart {
     	if(text == null || text.length() == 0) {
     		return;
     	}
-    	strBuff.append("<v:rect style=' WIDTH: 50px;  HEIGHT: 23px; TOP: " + y + "px; PADDING-TOP: 0px; LEFT: " + x + "px' coordsize = '21600,21600' stroked = 'f'>\r\n");
+    	int width = 0;
+    	if(text.charAt(0) > 256) {
+    		width = text.length() * 30;
+    	} else {
+    		width = text.length() * 20;
+    	}
+    	
+    	strBuff.append("<v:rect style=' WIDTH: " + width + "px;  HEIGHT: 23px; TOP: " + y + "px; LEFT: " + x + "px' >\r\n");
 		strBuff.append("<v:stroke opacity = '0'>\r\n");
 		strBuff.append("</v:stroke>\r\n");
 		strBuff.append("<v:fill opacity = '0'>\r\n");
@@ -250,7 +256,7 @@ public abstract class BaseVmlChart {
 		StringBuffer strBuff = new StringBuffer();
 		drawLegend(strBuff);
 		strBuff.append("<div style='width:" + m_width + "px;position:relative;margin:0 auto;'>\r\n");
-		strBuff.append("<v:group style='WIDTH: " + m_width + "px; HEIGHT: " + m_height + "px' coordsize = '" + m_width + "," + m_height + "'>\r\n");
+		strBuff.append("<v:group style='text-align:left;WIDTH: " + m_width + "px; HEIGHT: " + m_height + "px' coordsize = '" + m_width + "," + m_height + "'>\r\n");
 		drawChart(strBuff);
 		strBuff.append("</v:group>\r\n");
 		strBuff.append("</div>\r\n");
@@ -318,10 +324,10 @@ public abstract class BaseVmlChart {
 //					判断是否为中文
 					if(xText.length() > 0) {
 						int offsetLeft = 0;
-						if(xText.charAt(0) > 256) {
-							offsetLeft = (int)(12 * xText.length());
-						} else {
-							offsetLeft = (int)(6 * xText.length());
+						if(xText.charAt(0) > 256) {//中文
+							offsetLeft = (int)(10 * xText.length());
+						} else {//英文
+							offsetLeft = (int)(5 * xText.length());
 						}
 					    drawLabel(strBuff,xx - offsetLeft,y1,xText,"8");
 					}
@@ -350,7 +356,7 @@ public abstract class BaseVmlChart {
                     drawLine(strBuff,m_gridX,yy,m_gridX + m_gridW,yy,gridColour,"0.5pt",dash);
                 }
                 
-                drawLabel(strBuff,m_gridX - 28,yy-12,yLabel.getString("text"),"9");
+                drawLabel(strBuff,2,yy-12,yLabel.getString("text"),"8");
             }
     	}
 	}

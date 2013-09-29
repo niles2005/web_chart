@@ -1,4 +1,4 @@
-package com.xtwsoft.webchart;
+package com.xtwsoft.webchart.vmlChart;
 
 import com.alibaba.fastjson.JSONObject;
 import com.xtwsoft.webchart.vmlChart.VmlBarStackChart;
@@ -27,6 +27,8 @@ public class VmlChartManager {
 			return new VmlLineChart(chartData,width,height).buildChart();
 		} else if("bar-stack".equals(type)) {
 			return new VmlBarStackChart(chartData,width,height).buildChart();
+		} else if("h-bar-stack".equals(type)) {
+			return new VmlHBarStackChart(chartData,width,height).buildChart();
 		}
 		return null;
 	}

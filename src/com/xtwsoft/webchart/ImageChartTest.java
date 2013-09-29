@@ -9,7 +9,7 @@ import java.io.FileReader;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
-public class WebChartTest {
+public class ImageChartTest {
 	public static void main(String[] args) {
 		File chartFile = new File("D:\\mywork\\jszt\\workspace\\webchart\\pie.json");
 		try {
@@ -29,7 +29,7 @@ public class WebChartTest {
 			System.err.println(jsonConent);
 			
 			long t0 = System.currentTimeMillis();
-			byte[] imageData = WebChartManager.getInstance().buildImage(290, 200,chartData);
+			byte[] imageData = ImageChartManager.getInstance().buildImage(290, 200,chartData);
 			File f = new File("pie1.png");
 			System.err.println(f.getAbsolutePath());
 			BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(f));

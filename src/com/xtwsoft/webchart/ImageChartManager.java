@@ -15,17 +15,17 @@ import com.xtwsoft.webchart.charts.WeekCircleChart;
 import com.xtwsoft.webchart.charts.ServiceChart;
 import com.xtwsoft.webchart.charts.PieChart;
 
-public class WebChartManager {
-	private static WebChartManager m_instance = null;
+public class ImageChartManager {
+	private static ImageChartManager m_instance = null;
 	
-	public static WebChartManager getInstance() {
+	public static ImageChartManager getInstance() {
 		if(m_instance == null) {
-			m_instance = new WebChartManager();
+			m_instance = new ImageChartManager();
 		}
 		return m_instance;
 	}
 	
-	private WebChartManager() {
+	private ImageChartManager() {
 	}
 	
 	protected ImageFormat m_imageFormat = new ImageFormat();

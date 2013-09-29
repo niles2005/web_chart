@@ -42,8 +42,15 @@ public class VmlLineChart extends BaseVmlChart {
         	tmpBuff.append(xLabel.getInteger("xPos") + "," + yPos);
         }
 
-        int thisDrawPointRadius = (int)getFloat(key,"draw-point-radius",m_drawPointRadius);
-        int thisDrawPointWhiteRadius = (int)getFloat(key,"draw-point-white-radius",m_drawPointWhiteRadius);
+        int thisDrawPointRadius = (int)getFloat(key,"draw-point-radius",m_drawPointRadius) - 1;
+        int thisDrawPointWhiteRadius = (int)getFloat(key,"draw-point-white-radius",m_drawPointWhiteRadius) - 1;
+        //IE中画环的机制和canvas不一样，画出的环比canvas上大，所以同步减去1
+        if(thisDrawPointRadius < 0) {
+        	thisDrawPointRadius = 0;
+        }
+        if(thisDrawPointWhiteRadius < 0) {
+        	thisDrawPointWhiteRadius = 0;
+        }
         
     	strBuff.append("<v:polyline style='antialias: true' points = '" + tmpBuff.toString() + "' filled = 'f' strokecolor = '" + colour + "' strokeweight = '" + m_strokeWeight + "'>\r\n");
     	strBuff.append("</v:polyline>\r\n");
