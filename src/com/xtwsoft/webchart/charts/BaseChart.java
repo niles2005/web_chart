@@ -19,6 +19,7 @@ public abstract class BaseChart {
 	protected JSONArray m_values = null;
 	protected int m_imageWidth;
 	protected int m_imageHeight;
+	protected Color m_backgroundColor = Color.WHITE;
 	public BaseChart(JSONObject element,JSONObject legend,int imageWidth,int imageHeight) {
 		m_element = element;
 		m_legend = legend;
@@ -26,6 +27,10 @@ public abstract class BaseChart {
 		m_values = element.getJSONArray("values");
 		m_imageWidth = imageWidth;
 		m_imageHeight = imageHeight;
+		Color bgColor = ChartUtil.getColor(element.getString("bg_colour"));
+		if(bgColor != null) {
+			m_backgroundColor = bgColor;
+		}
 	}
 	public abstract void draw(Graphics2D g2);
 	
