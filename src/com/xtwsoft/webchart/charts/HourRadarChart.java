@@ -47,17 +47,16 @@ public class HourRadarChart extends BaseChart {
 	
 	
 	private void drawGrid(Graphics2D g2 ,int gridGap ,int calibration){
-		float dash1[] = {1.2f};
-		BasicStroke dashed = new BasicStroke(0.5f,
+		BasicStroke dashed = new BasicStroke(1f,
 	            BasicStroke.CAP_BUTT,
 	            BasicStroke.JOIN_MITER,
-	            10.0f, dash1, 0.0f);
+	            10.0f, new float[]{1.1f}, 0.0f);
 		
 		for (int i = 0; i < calibration; i++) {
 			int currentRadius = m_coordinateRadius - i * gridGap;
 			
 			if( i % 2 == 1){
-				g2.setColor(new Color(0,0,0,6));
+				g2.setColor(new Color(0,0,0,15));
 				g2.fillArc(-currentRadius, -currentRadius,currentRadius * 2, currentRadius * 2, 0, 180);
 				g2.setColor(this.m_backgroundColor);
 				g2.fillArc(-currentRadius+gridGap, -currentRadius+gridGap,(currentRadius-gridGap) * 2, (currentRadius-gridGap) * 2, 0, 180);

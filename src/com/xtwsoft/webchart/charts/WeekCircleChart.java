@@ -20,7 +20,7 @@ public class WeekCircleChart extends BaseChart {
 	}
 	
 	static float dash1[] = {1.2f};
-	static BasicStroke dashed = new BasicStroke(0.5f,
+	static BasicStroke dashed = new BasicStroke(1f,
             BasicStroke.CAP_BUTT,
             BasicStroke.JOIN_MITER,
             10.0f, dash1, 0.0f);
