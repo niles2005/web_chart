@@ -1,7 +1,6 @@
 package com.xtwsoft.webchart;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
@@ -11,9 +10,11 @@ import com.xtwsoft.images.GIF;
 import com.xtwsoft.images.ImageFormat;
 import com.xtwsoft.images.MinimapImage;
 import com.xtwsoft.images.PNG8;
-import com.xtwsoft.webchart.charts.WeekCircleChart;
-import com.xtwsoft.webchart.charts.ServiceChart;
+import com.xtwsoft.webchart.charts.HourRadarChart;
+import com.xtwsoft.webchart.charts.LoopChart;
 import com.xtwsoft.webchart.charts.PieChart;
+import com.xtwsoft.webchart.charts.ServiceChart;
+import com.xtwsoft.webchart.charts.WeekCircleChart;
 
 public class ImageChartManager {
 	private static ImageChartManager m_instance = null;
@@ -40,7 +41,6 @@ public class ImageChartManager {
 		}
 		g2.setColor(bgColor);
 		g2.fillRect(0, 0, imageWidth, imageHeight);
-		
 		if(chartData == null) {
 			return;
 		}
@@ -57,7 +57,11 @@ public class ImageChartManager {
 				new WeekCircleChart(element,legend,imageWidth,imageHeight).draw(g2);
 			} else if("service".equals(type)) {
 				new ServiceChart(element,legend,imageWidth,imageHeight).draw(g2);
-			}
+			} else if("loop".equals(type)) {
+				new LoopChart(element,legend,imageWidth,imageHeight).draw(g2);
+			} else if("hourRadar".equals(type)) {
+				new HourRadarChart(element,legend,imageWidth,imageHeight).draw(g2);
+			} 
 		}
 	}
 
