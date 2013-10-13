@@ -8,6 +8,7 @@ import java.awt.RenderingHints;
 import java.awt.geom.Point2D;
 
 import com.alibaba.fastjson.JSONObject;
+import com.xtwsoft.webchart.ChartUtil;
 
 public class HourRadarChart extends BaseChart {
 	private int m_coordinateRadius ; 
@@ -52,11 +53,14 @@ public class HourRadarChart extends BaseChart {
 	            BasicStroke.JOIN_MITER,
 	            10.0f, new float[]{1.1f}, 0.0f);
 		
+		String zebraColor = m_element.getString("zebra-color");
+		float zebraAlpha = m_element.getFloatValue("zebra-alpha");
+		Color newColor = ChartUtil.getColor(zebraColor, zebraAlpha);
 		for (int i = 0; i < calibration; i++) {
 			int currentRadius = m_coordinateRadius - i * gridGap;
 			
 			if( i % 2 == 1){
-				g2.setColor(new Color(0,0,0,15));
+				g2.setColor(newColor);
 				g2.fillArc(-currentRadius, -currentRadius,currentRadius * 2, currentRadius * 2, 0, 180);
 				g2.setColor(this.m_backgroundColor);
 				g2.fillArc(-currentRadius+gridGap, -currentRadius+gridGap,(currentRadius-gridGap) * 2, (currentRadius-gridGap) * 2, 0, 180);
