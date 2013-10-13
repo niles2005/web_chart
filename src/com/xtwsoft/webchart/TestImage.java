@@ -98,12 +98,13 @@ public class TestImage extends JFrame {
         contentPane.add(m_panel,BorderLayout.CENTER);
         
         ArrayList urlItemList = new ArrayList();
+        urlItemList.add(new UrlItem("http://127.0.0.1/%E4%BA%A4%E9%80%9A%E7%8A%B6%E6%80%81%E7%BB%BC%E5%90%88%E7%9B%91%E6%B5%8B/%E9%87%8D%E7%82%B9%E8%B7%AF%E6%AE%B5%E7%BB%BC%E5%90%88%E6%80%81%E5%8A%BF.page/speRoadStatus.jsonx"));
         urlItemList.add(new UrlItem("http://127.0.0.1/%E4%BA%A4%E9%80%9A%E7%8A%B6%E5%86%B5%E9%A2%84%E6%B5%8B%E9%A2%84%E6%8A%A5/%E8%B7%AF%E6%AE%B5%E9%A2%84%E6%B5%8B%E5%88%86%E6%9E%90.page/hourRadar.jsonx"));
         urlItemList.add(new UrlItem("http://localhost/%E4%BA%A4%E9%80%9A%E7%8A%B6%E6%80%81%E7%BB%BC%E5%90%88%E7%9B%91%E6%B5%8B/%E8%B7%AF%E7%BD%91%E4%BA%A4%E9%80%9A%E7%BB%BC%E5%90%88%E6%80%81%E5%8A%BF.page/loop.jsonx"));
         urlItemList.add(new UrlItem("http://127.0.0.1/%E9%A6%96%E9%A1%B5.page/weekCircleChart.jsonx"));
         urlItemList.add(new UrlItem("http://127.0.0.1/%E4%BA%A4%E9%80%9A%E7%8A%B6%E6%80%81%E7%BB%BC%E5%90%88%E7%9B%91%E6%B5%8B/%E8%B7%AF%E7%BD%91%E4%BA%A4%E9%80%9A%E7%BB%BC%E5%90%88%E6%80%81%E5%8A%BF.page/pie-1.jsonx"));
         urlItemList.add(new UrlItem("http://127.0.0.1/%E4%BA%A4%E9%80%9A%E7%8A%B6%E6%80%81%E7%BB%BC%E5%90%88%E7%9B%91%E6%B5%8B/%E8%B7%AF%E7%BD%91%E4%BA%A4%E9%80%9A%E7%BB%BC%E5%90%88%E6%80%81%E5%8A%BF.page/roadnetBottleneckChart.jsonx"));
-        urlItemList.add(new UrlItem("http://127.0.0.1/%E4%BA%A4%E9%80%9A%E7%8A%B6%E6%80%81%E7%BB%BC%E5%90%88%E7%9B%91%E6%B5%8B/%E9%87%8D%E7%82%B9%E8%B7%AF%E6%AE%B5%E7%BB%BC%E5%90%88%E6%80%81%E5%8A%BF.page/speRoadStatus.jsonx"));
+        
         urlItemList.add(new UrlItem("http://127.0.0.1/%E4%BA%A4%E9%80%9A%E7%8A%B6%E6%80%81%E7%BB%BC%E5%90%88%E7%9B%91%E6%B5%8B/%E9%87%8D%E7%82%B9%E8%B7%AF%E6%AE%B5%E7%BB%BC%E5%90%88%E6%80%81%E5%8A%BF.page/speRoadnetService.jsonx"));
         for(int i=0;i<urlItemList.size();i++) {
         	comboBox.addItem(urlItemList.get(i));

@@ -7,9 +7,9 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
+import java.awt.geom.GeneralPath;
 import java.awt.geom.Rectangle2D;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.xtwsoft.webchart.ChartUtil;
 
@@ -81,8 +81,8 @@ public class PieChart extends BaseChart {
 		
 		drawPie(g2,pieRadius,totalValue);
 		drawPieHoleAndLine(g2,pieRadius,totalValue);
+		drawPointer(g2,pieRadius,totalValue);
 		drawPieLabel(g2,pieRadius,totalValue);
-		
 		g2.translate(-pieWidth / 2, -m_imageHeight /2);
 		
 		//图形部分宽度
@@ -189,6 +189,36 @@ public class PieChart extends BaseChart {
 		}
 		g2.setFont(bakFont);
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
+	}
+	
+	
+	private void drawPointer(Graphics2D g2,int pieRadius,double totalValue) {
+		double holePosRate = getDouble(m_element,"hole-pos-rate");
+		double pointerRadius = pieRadius * 0.9;
+		if(holePosRate > 0) {
+			int innerR = (int)(pieRadius * holePosRate * holePosRate / 2);
+			
+			double angle = Math.acos((double)innerR / pointerRadius);
+			double x1 = Math.cos(angle) * innerR;
+			double x2 = x1;
+			double y1 = Math.sin(angle) * innerR;
+			double y2 = -y1;
+			
+			
+			GeneralPath triangle = new GeneralPath();
+			triangle.moveTo(x1, y1);
+			triangle.lineTo(0, 0);
+			triangle.lineTo(x2, y2);
+			triangle.lineTo(pointerRadius,0);
+			triangle.closePath();
+			g2.setColor(Color.GRAY);
+			g2.fill(triangle);
+			g2.fillOval(-innerR, -innerR, innerR * 2,  innerR * 2);
+		}
+		
+		
+		
+		
 	}
 	
 	
