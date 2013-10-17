@@ -1,5 +1,9 @@
 package com.xtwsoft.webchart.vmlChart;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
@@ -26,20 +30,35 @@ public class VmlLineChart extends BaseVmlChart {
     }
 	
     public void drawPolyline(StringBuffer strBuff,int index,JSONObject key) {
+        ArrayList valuesList = new ArrayList();
+        for (int i = 0; i < m_values.size(); i++) {
+        	JSONArray arr = m_values.getJSONArray(i);
+        	valuesList.add(arr);
+        }        
+        Collections.sort(valuesList,new Comparator() {
+        	public int compare(Object object1, Object object2) {
+        		JSONArray arr1 = (JSONArray)object1;
+        		JSONArray arr2 = (JSONArray)object2;
+        		JSONObject xLabel1 = getXLabel(arr1.getString(0));
+        		JSONObject xLabel2 = getXLabel(arr2.getString(0));
+        		return xLabel1.getIntValue("x") - xLabel2.getIntValue("x");
+        	}
+        });
+    	
     	String colour = key.getString("colour");
     	String name = key.getString("text");
     	StringBuffer tmpBuff = new StringBuffer();
-        for (int i = 0; i < m_values.size(); i++) {
+        for (int i = 0; i < valuesList.size(); i++) {
         	if(i > 0) {
         		tmpBuff.append(",");
         	}
-        	JSONObject xLabel = m_xLabels.getJSONObject(i);
-        	JSONArray arr = m_values.getJSONArray(i);
-        	float v = arr.getFloatValue(index);
-        	int yPos = getYPos(v);
-        	
-        	
-        	tmpBuff.append(xLabel.getInteger("xPos") + "," + yPos);
+        	JSONArray arr = (JSONArray)valuesList.get(i);
+        	JSONObject xLabel = this.getXLabel(arr.getString(0));
+        	if(xLabel != null) {
+            	float v = arr.getFloatValue(index + 1);
+            	int yPos = getYPos(v);
+            	tmpBuff.append(xLabel.getInteger("xPos") + "," + yPos);
+        	}        	
         }
 
         int thisDrawPointRadius = (int)getFloat(key,"draw-point-radius",m_drawPointRadius) - 1;
@@ -52,43 +71,47 @@ public class VmlLineChart extends BaseVmlChart {
         	thisDrawPointWhiteRadius = 0;
         }
         
+        
+        
     	strBuff.append("<v:polyline style='antialias: true' points = '" + tmpBuff.toString() + "' filled = 'f' strokecolor = '" + colour + "' strokeweight = '" + m_strokeWeight + "'>\r\n");
     	strBuff.append("</v:polyline>\r\n");
     	
-        for (int i = 0; i < m_values.size(); i++) {
-        	JSONObject xLabel = m_xLabels.getJSONObject(i);
-        	JSONArray arr = m_values.getJSONArray(i);
-        	float v = arr.getFloatValue(index);
-        	
-			String label = xLabel.getString("text") + ":" + name + ":" + arr.getString(index);
-            if(thisDrawPointRadius > thisDrawPointWhiteRadius) {
-            	int yPos = getYPos(v) - thisDrawPointRadius;
-    			int xPos = xLabel.getInteger("xPos") - thisDrawPointRadius;
-
-    			int width = thisDrawPointRadius * 2;
-    			int height = thisDrawPointRadius * 2;
+        for (int i = 0; i < valuesList.size(); i++) {
+        	JSONArray arr = (JSONArray)valuesList.get(i);
+        	JSONObject xLabel = this.getXLabel(arr.getString(0));
+        	if(xLabel != null) {
+            	float v = arr.getFloatValue(index + 1);
             	
-    			strBuff.append("<v:oval style='WIDTH: " + width + "px; HEIGHT: " + height + "px; TOP: " + yPos + "px; LEFT: " + xPos + "px' title=" + label + " coordsize = '21600,21600' fillcolor = 'white' strokecolor = '" + colour + "' strokeweight = '1.5pt'>\r\n");
-    			strBuff.append("</v:oval>\r\n");
-            } else if(thisDrawPointRadius == thisDrawPointWhiteRadius) {//相等，白环不画
-            	int yPos = getYPos(v) - thisDrawPointRadius;
-    			int xPos = xLabel.getInteger("xPos") - thisDrawPointRadius;
+    			String label = xLabel.getString("text") + ":" + name + ":" + arr.getString(index + 1);
+                if(thisDrawPointRadius > thisDrawPointWhiteRadius) {
+                	int yPos = getYPos(v) - thisDrawPointRadius;
+        			int xPos = xLabel.getInteger("xPos") - thisDrawPointRadius;
 
-    			int width = thisDrawPointRadius * 2;
-    			int height = thisDrawPointRadius * 2;
-            	
-    			strBuff.append("<v:oval style='WIDTH: " + width + "px; HEIGHT: " + height + "px; TOP: " + yPos + "px; LEFT: " + xPos + "px' title=" + label + " coordsize = '21600,21600' fillcolor = '" + colour + "' >\r\n");
-    			strBuff.append("</v:oval>\r\n");
-            } else {
-            	int yPos = getYPos(v) - thisDrawPointWhiteRadius;
-    			int xPos = xLabel.getInteger("xPos") - thisDrawPointWhiteRadius;
+        			int width = thisDrawPointRadius * 2;
+        			int height = thisDrawPointRadius * 2;
+                	
+        			strBuff.append("<v:oval style='WIDTH: " + width + "px; HEIGHT: " + height + "px; TOP: " + yPos + "px; LEFT: " + xPos + "px' title=" + label + " coordsize = '21600,21600' fillcolor = 'white' strokecolor = '" + colour + "' strokeweight = '1.5pt'>\r\n");
+        			strBuff.append("</v:oval>\r\n");
+                } else if(thisDrawPointRadius == thisDrawPointWhiteRadius) {//相等，白环不画
+                	int yPos = getYPos(v) - thisDrawPointRadius;
+        			int xPos = xLabel.getInteger("xPos") - thisDrawPointRadius;
 
-    			int width = thisDrawPointWhiteRadius * 2;
-    			int height = thisDrawPointWhiteRadius * 2;
+        			int width = thisDrawPointRadius * 2;
+        			int height = thisDrawPointRadius * 2;
+                	
+        			strBuff.append("<v:oval style='WIDTH: " + width + "px; HEIGHT: " + height + "px; TOP: " + yPos + "px; LEFT: " + xPos + "px' title=" + label + " coordsize = '21600,21600' fillcolor = '" + colour + "' >\r\n");
+        			strBuff.append("</v:oval>\r\n");
+                } else {
+                	int yPos = getYPos(v) - thisDrawPointWhiteRadius;
+        			int xPos = xLabel.getInteger("xPos") - thisDrawPointWhiteRadius;
 
-    			strBuff.append("<v:oval style='WIDTH: " + width + "px; HEIGHT: " + height + "px; TOP: " + yPos + "px; LEFT: " + xPos + "px' title=" + label + " coordsize = '21600,21600' fillcolor = '" + colour + "' strokecolor = 'white' strokeweight = '1.5pt'>\r\n");
-    			strBuff.append("</v:oval>\r\n");
-            }        	
+        			int width = thisDrawPointWhiteRadius * 2;
+        			int height = thisDrawPointWhiteRadius * 2;
+
+        			strBuff.append("<v:oval style='WIDTH: " + width + "px; HEIGHT: " + height + "px; TOP: " + yPos + "px; LEFT: " + xPos + "px' title=" + label + " coordsize = '21600,21600' fillcolor = '" + colour + "' strokecolor = 'white' strokeweight = '1.5pt'>\r\n");
+        			strBuff.append("</v:oval>\r\n");
+                }        	
+        	}
 			
         }
     }

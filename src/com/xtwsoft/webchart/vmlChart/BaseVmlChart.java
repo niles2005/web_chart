@@ -1,6 +1,7 @@
 package com.xtwsoft.webchart.vmlChart;
 
 import java.math.BigDecimal;
+import java.util.Hashtable;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -264,6 +265,14 @@ public abstract class BaseVmlChart {
 		return strBuff.toString();
 	}
 	
+	protected JSONObject getXLabel(String xLabelName) {
+		Hashtable labelHash = (Hashtable)this.m_xAxis.get("labelHash");
+        if(labelHash != null) {
+            return (JSONObject)labelHash.get(xLabelName);
+        }
+        return null;
+	}
+	
 	protected void drawXAxisAndLabels(StringBuffer strBuff) {
     	if(m_xLabels != null) {
             int poleLength = (int)this.m_xAxis.getFloatValue("pole-length");
@@ -279,13 +288,17 @@ public abstract class BaseVmlChart {
             int y1 = m_gridY + m_gridH;
             
             boolean gridVisible = getBoolean(m_xAxis,"grid-visible",true);
-            
+            Hashtable labelHash = new Hashtable(); 
+            this.m_xAxis.put("labelHash", labelHash);
             for(int i=0;i<xNum;i++) {
 				JSONObject xLabel = m_xLabels.getJSONObject(i);
                 int xx = (int)(this.getXPos(xLabel.getFloatValue("x")));
                 xLabel.put("xPos", xx);
                 
 				String xText = xLabel.getString("text");
+				if(xText != null) {
+					labelHash.put(xText, xLabel);
+				}
                 if(gridVisible) {
                     String fillStyle = xLabel.getString("fill-style");
                     if(fillStyle != null) {
