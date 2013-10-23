@@ -78,18 +78,33 @@ public class PieChart extends BaseChart {
 			JSONObject value = m_values.getJSONObject(i);
 			totalValue += this.getDouble(value,"value");
 		}
-		
-		drawPie(g2,pieRadius,totalValue);
-		drawPieHoleAndLine(g2,pieRadius,totalValue);
-		drawPointer(g2,pieRadius,totalValue);
-		drawPieLabel(g2,pieRadius,totalValue);
-		g2.translate(-pieWidth / 2, -m_imageHeight /2);
-		
-		//图形部分宽度
-		int graphWidth = pieRadius * 2;
-		//图形部分高度
-		int graphHeight = pieRadius * 2;
-		drawLegend(g2,legendRectX,legendRectY,legendRectWidth,legendRectHeight,legendWidth,legendHeight,graphWidth,graphHeight);
+		if(totalValue == 0) {
+			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+			int r = pieRadius;
+			g2.setColor(Color.lightGray);
+			g2.fillArc(-r, -r, r * 2, r * 2, 0, 360);
+			
+			double holePosRate = getDouble(m_element,"hole-pos-rate");
+			if(holePosRate > 0) {
+				int innerR = (int)(pieRadius * holePosRate);
+				g2.setColor(Color.white);
+				g2.fillOval(-innerR, -innerR, innerR * 2, innerR * 2);
+			}
+		} else {
+			int pointerIndex = getInt(m_element,"pointer-index",-1);
+			
+			drawPie(g2,pieRadius,totalValue);
+			drawPieHoleAndLine(g2,pieRadius,totalValue);
+//			drawPointer(g2,pieRadius,totalValue,200);
+			drawPieLabel(g2,pieRadius,totalValue,pointerIndex);
+			g2.translate(-pieWidth / 2, -m_imageHeight /2);
+			
+			//图形部分宽度
+			int graphWidth = pieRadius * 2;
+			//图形部分高度
+			int graphHeight = pieRadius * 2;
+			drawLegend(g2,legendRectX,legendRectY,legendRectWidth,legendRectHeight,legendWidth,legendHeight,graphWidth,graphHeight);
+		}
 	}
 	
 	private void drawPie(Graphics2D g2,int pieRadius,double totalValue) {
@@ -138,22 +153,25 @@ public class PieChart extends BaseChart {
 
 			for(int i=0;i<valueCount;i++) {
 				JSONObject value = m_values.getJSONObject(i);
-				int angle = (int)(360.0 * value.getDoubleValue("value") / totalValue);
-				if(i == valueCount - 1) {
-					angle = totalAngle - startAnglue;
+				double v = value.getDoubleValue("value");
+				if(v > 0 && v < totalValue) {
+					int angle = (int)(360.0 * v / totalValue);
+					if(i == valueCount - 1) {
+						angle = totalAngle - startAnglue;
+					}
+					
+					double x =  lineR * Math.cos(startAnglue * Math.PI / 180);
+					double y =  -lineR * Math.sin(startAnglue * Math.PI / 180);
+					g2.drawLine(0, 0, (int)x, (int)y);
+					
+					startAnglue += angle;
 				}
-				
-				double x =  lineR * Math.cos(startAnglue * Math.PI / 180);
-				double y =  -lineR * Math.sin(startAnglue * Math.PI / 180);
-				g2.drawLine(0, 0, (int)x, (int)y);
-				
-				startAnglue += angle;
 			}
 			g2.setStroke(defaultStroke);
 		}
 	}
 	
-	private void drawPieLabel(Graphics2D g2,int pieRadius,double totalValue) {
+	private void drawPieLabel(Graphics2D g2,int pieRadius,double totalValue,int pointerIndex) {
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		Font bakFont = g2.getFont();
 		Font newFont = new Font(Font.SANS_SERIF, getFontFamily(), 12);
@@ -168,33 +186,39 @@ public class PieChart extends BaseChart {
 		FontMetrics fm = g2.getFontMetrics();
 		for(int i=0;i<valueCount;i++) {
 			JSONObject value = m_values.getJSONObject(i);
-			
-			g2.setFont(g2.getFont().deriveFont(this.getFloat(value, "font-size", 12)));
-			
-			int angle = (int)(360.0 * value.getFloatValue("value") / totalValue);
-			if(i == valueCount - 1) {
-				angle = totalAngle - startAnglue;
+			double v = value.getDoubleValue("value");
+			if(v > 0) {
+				g2.setFont(g2.getFont().deriveFont(this.getFloat(value, "font-size", 12)));
+				
+				int angle = (int)(360.0 * value.getFloatValue("value") / totalValue);
+				if(i == valueCount - 1) {
+					angle = totalAngle - startAnglue;
+				}
+				int middleArc = startAnglue + angle / 2;
+				
+				if(i == pointerIndex) {
+					drawPointer(g2,pieRadius,totalValue,middleArc);
+				}
+				
+				Rectangle2D rect = fm.getStringBounds(value.getString("label"), g2);
+				
+				double x =  labelR * Math.cos(middleArc * Math.PI / 180);// - rect.getWidth() / 2;
+				double y =  -labelR * Math.sin(middleArc * Math.PI / 180);// - rect.getHeight() / 2;
+				g2.translate(x, y);
+				g2.setColor(getColor(value,"label-colour",Color.white));
+				g2.drawString(value.getString("label"), -(int)(rect.getWidth()/2), (int)(rect.getHeight()/4 ));
+				
+				startAnglue += angle;
+				g2.translate(-x, -y);
 			}
-			int middleArc = startAnglue + angle / 2;
-			Rectangle2D rect = fm.getStringBounds(value.getString("label"), g2);
-			
-			double x =  labelR * Math.cos(middleArc * Math.PI / 180);// - rect.getWidth() / 2;
-			double y =  -labelR * Math.sin(middleArc * Math.PI / 180);// - rect.getHeight() / 2;
-			g2.translate(x, y);
-			g2.setColor(getColor(value,"label-colour",Color.white));
-			g2.drawString(value.getString("label"), -(int)(rect.getWidth()/2), (int)(rect.getHeight()/4 ));
-			
-			startAnglue += angle;
-			g2.translate(-x, -y);
 		}
 		g2.setFont(bakFont);
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
 	}
 	
-	
-	private void drawPointer(Graphics2D g2,int pieRadius,double totalValue) {
+	private void drawPointer(Graphics2D g2,int pieRadius,double totalValue,int pointerAngle) {
 		double holePosRate = getDouble(m_element,"hole-pos-rate");
-		double pointerRadius = pieRadius * 0.9;
+		double pointerRadius = pieRadius * 0.75;
 		if(holePosRate > 0) {
 			int innerR = (int)(pieRadius * holePosRate * holePosRate / 2);
 			
@@ -211,15 +235,15 @@ public class PieChart extends BaseChart {
 			triangle.lineTo(x2, y2);
 			triangle.lineTo(pointerRadius,0);
 			triangle.closePath();
+			
+			double theAngle = Math.toRadians(pointerAngle);
+			g2.rotate(-theAngle);
+			
 			g2.setColor(Color.GRAY);
 			g2.fill(triangle);
 			g2.fillOval(-innerR, -innerR, innerR * 2,  innerR * 2);
+			
+			g2.rotate(theAngle);
 		}
-		
-		
-		
-		
 	}
-	
-	
 }
