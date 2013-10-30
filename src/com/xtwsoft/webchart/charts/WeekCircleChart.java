@@ -15,8 +15,8 @@ import com.xtwsoft.webchart.ChartUtil;
 
 
 public class WeekCircleChart extends BaseChart {
-	public WeekCircleChart(JSONObject element,JSONObject legend,int imageWidth,int imageHeight) {
-		super(element,legend,imageWidth,imageHeight);
+	public WeekCircleChart(JSONObject chartData,JSONObject legend,int imageWidth,int imageHeight) {
+		super(chartData,legend,imageWidth,imageHeight);
 	}
 	
 	static float dash1[] = {1.2f};

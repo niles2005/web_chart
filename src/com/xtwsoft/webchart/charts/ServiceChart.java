@@ -16,8 +16,8 @@ import com.xtwsoft.webchart.ChartUtil;
 
 
 public class ServiceChart extends BaseChart {
-	public ServiceChart(JSONObject element,JSONObject legend,int imageWidth,int imageHeight) {
-		super(element,legend,imageWidth,imageHeight);
+	public ServiceChart(JSONObject chartData,JSONObject legend,int imageWidth,int imageHeight) {
+		super(chartData,legend,imageWidth,imageHeight);
 	}
 	
 	public void draw(Graphics2D g2) {
@@ -34,7 +34,7 @@ public class ServiceChart extends BaseChart {
 			chartPosY = m_imageHeight;
 			pieRadius = m_imageWidth / 2;
 		}
-		double islandPosRate = getDouble(m_element,"island-pos-rate");
+		double islandPosRate = getDouble(m_chartData,"island-pos-rate");
 		int islandRadius = (int)(pieRadius * islandPosRate);
 		chartPosY -= islandRadius + m_imageHeight / 20;
 		pieRadius -= m_imageHeight / 20;
@@ -142,7 +142,7 @@ public class ServiceChart extends BaseChart {
 			int pointerIslandR = (int)(islandRadius * 0.5);
 			
 			//画指针
-			double pointerPosRate = getDouble(m_element,"pointer-pos-rate");
+			double pointerPosRate = getDouble(m_chartData,"pointer-pos-rate");
 			if(pointerPosRate <= 0) {
 				pointerPosRate = 0.5;
 			}
@@ -181,14 +181,14 @@ public class ServiceChart extends BaseChart {
 	}
 	
 	private void drawPieHoleAndLine(Graphics2D g2,int pieRadius,int fromAnglue,int eachAngle) {
-		double holePosRate = getDouble(m_element,"hole-pos-rate");
+		double holePosRate = getDouble(m_chartData,"hole-pos-rate");
 		if(holePosRate > 0) {
 			int innerR = (int)(pieRadius * holePosRate);
 			g2.setColor(Color.white);
 			g2.fillOval(-innerR, -innerR, innerR * 2, innerR * 2);
 		}
 		
-		double splitLineWidth = getDouble(m_element,"split-line-width");
+		double splitLineWidth = getDouble(m_chartData,"split-line-width");
 		if(splitLineWidth > 0) {
 			Stroke defaultStroke = g2.getStroke();
 			if(splitLineWidth > 0) {

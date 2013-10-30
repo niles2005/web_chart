@@ -3,13 +3,11 @@ package com.xtwsoft.webchart;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 
-import com.alibaba.fastjson.JSONArray;
+import javax.imageio.ImageIO;
+
 import com.alibaba.fastjson.JSONObject;
-import com.xtwsoft.images.GIF;
-import com.xtwsoft.images.ImageFormat;
-import com.xtwsoft.images.MinimapImage;
-import com.xtwsoft.images.PNG8;
 import com.xtwsoft.webchart.charts.HourRadarChart;
 import com.xtwsoft.webchart.charts.LoopChart;
 import com.xtwsoft.webchart.charts.PieChart;
@@ -29,8 +27,6 @@ public class ImageChartManager {
 	private ImageChartManager() {
 	}
 	
-	protected ImageFormat m_imageFormat = new ImageFormat();
-	
 	public void drawChart(Graphics2D g2,JSONObject chartData,int imageWidth,int imageHeight) {
 		Color bgColor = null;
 		if(chartData != null) {
@@ -47,22 +43,18 @@ public class ImageChartManager {
 		
 		JSONObject legend = chartData.getJSONObject("legend");
 		
-		JSONArray jsonArray = chartData.getJSONArray("elements");
-		if(jsonArray.size() > 0) {
-			JSONObject element = jsonArray.getJSONObject(0);
-			String type = element.getString("type");
-			if("pie".equals(type)) {
-				new PieChart(element,legend,imageWidth,imageHeight).draw(g2);
-			} else if("weekCircle".equals(type)) {
-				new WeekCircleChart(element,legend,imageWidth,imageHeight).draw(g2);
-			} else if("service".equals(type)) {
-				new ServiceChart(element,legend,imageWidth,imageHeight).draw(g2);
-			} else if("loop".equals(type)) {
-				new LoopChart(element,legend,imageWidth,imageHeight).draw(g2);
-			} else if("hourRadar".equals(type)) {
-				new HourRadarChart(element,legend,imageWidth,imageHeight).draw(g2);
-			} 
-		}
+		String type = chartData.getString("type");
+		if("pie".equals(type)) {
+			new PieChart(chartData,legend,imageWidth,imageHeight).draw(g2);
+		} else if("weekCircle".equals(type)) {
+			new WeekCircleChart(chartData,legend,imageWidth,imageHeight).draw(g2);
+		} else if("service".equals(type)) {
+			new ServiceChart(chartData,legend,imageWidth,imageHeight).draw(g2);
+		} else if("loop".equals(type)) {
+			new LoopChart(chartData,legend,imageWidth,imageHeight).draw(g2);
+		} else if("hourRadar".equals(type)) {
+			new HourRadarChart(chartData,legend,imageWidth,imageHeight).draw(g2);
+		} 
 	}
 
 	public byte[] buildImage(int imageWidth,int imageHeight,JSONObject chartData) {
@@ -80,6 +72,7 @@ public class ImageChartManager {
             BufferedImage image = chartImage.getImage();
 
             byte[] imageData = convertImage(image);
+
             return imageData;
         }
         catch (Exception e) {
@@ -100,19 +93,12 @@ public class ImageChartManager {
 	
     protected byte[] convertImage(BufferedImage buffImage) {
 		try {
-			MinimapImage image = null;
-			if (m_imageFormat.getType() == ImageFormat.PNG) {
-				image = new PNG8(buffImage);
-			} else if (m_imageFormat.getType() == ImageFormat.GIF) {
-                image = new GIF(buffImage);
-			} else {
-                return null;
-			}
-			return image.getFileBytes();
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			ImageIO.write(buffImage, "png", baos);
+			return baos.toByteArray();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
-    }
-	
+    }	
 }

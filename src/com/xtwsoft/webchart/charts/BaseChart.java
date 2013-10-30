@@ -13,21 +13,21 @@ import com.alibaba.fastjson.JSONObject;
 import com.xtwsoft.webchart.ChartUtil;
 
 public abstract class BaseChart {
-	protected JSONObject m_element = null;
+	protected JSONObject m_chartData = null;
 	protected JSONObject m_legend = null;
 	protected JSONArray m_keys = null;
 	protected JSONArray m_values = null;
 	protected int m_imageWidth;
 	protected int m_imageHeight;
 	protected Color m_backgroundColor = Color.WHITE;
-	public BaseChart(JSONObject element,JSONObject legend,int imageWidth,int imageHeight) {
-		m_element = element;
+	public BaseChart(JSONObject chartData,JSONObject legend,int imageWidth,int imageHeight) {
+		m_chartData = chartData;
 		m_legend = legend;
-		m_keys = m_element.getJSONArray("keys");
-		m_values = element.getJSONArray("values");
+		m_keys = chartData.getJSONArray("keys");
+		m_values = chartData.getJSONArray("values");
 		m_imageWidth = imageWidth;
 		m_imageHeight = imageHeight;
-		Color bgColor = ChartUtil.getColor(element.getString("bg-colour"));
+		Color bgColor = ChartUtil.getColor(chartData.getString("bg-colour"));
 		if(bgColor != null) {
 			m_backgroundColor = bgColor;
 		}
@@ -110,7 +110,7 @@ public abstract class BaseChart {
 	//图标的宽度，缺省为10
 	float m_legendIconWidth = 0;
 	public float getLegendIconWidth() {
-		if(m_legendIconWidth <= 0) {
+		if(m_legend != null && m_legendIconWidth <= 0) {
 			m_legendIconWidth = m_legend.getFloatValue("icon-width");
 			if(m_legendIconWidth <= 0) {
 				m_legendIconWidth = 10;
@@ -122,7 +122,7 @@ public abstract class BaseChart {
 	//图标与标题之间的距离,缺省为3
 	float m_legendIconLabelMargin = 0;
 	public float getLegendIconLabelMargin() {
-		if(m_legendIconLabelMargin <= 0) {
+		if(m_legend != null && m_legendIconLabelMargin <= 0) {
 			m_legendIconLabelMargin = m_legend.getFloatValue("icon-label-margin");
 			if(m_legendIconLabelMargin <= 0) {
 				m_legendIconLabelMargin = 3;
@@ -134,7 +134,7 @@ public abstract class BaseChart {
 	//竖排label时，上一个label和下一个label的间距,缺省为1
 	float m_legendOffset = 0;
 	public float getLegendOffset() {
-		if(m_legendOffset <= 0) {
+		if(m_legend != null && m_legendOffset <= 0) {
 			m_legendOffset = m_legend.getFloatValue("offset");
 			if(m_legendOffset <= 0) {
 				m_legendOffset = 1;
@@ -146,7 +146,7 @@ public abstract class BaseChart {
 	private int m_fontFamily = -1;
 	public int getFontFamily() {
 		if(m_fontFamily == -1) {
-			String strFontFalimy = m_element.getString("font-family");
+			String strFontFalimy = m_chartData.getString("font-family");
 			if("BOLD".equalsIgnoreCase(strFontFalimy)) {
 				m_fontFamily = Font.BOLD;
 			} else if("ITALIC".equalsIgnoreCase(strFontFalimy)) {
@@ -159,6 +159,9 @@ public abstract class BaseChart {
 	}
 	
 	protected void drawLegend(Graphics2D g2,int rectX,int rectY,int rectWidth,int rectHeight,double legendWidth,double legendHeight,int graphWidth,int graphHeight) {
+		if(this.m_legend == null) {
+			return;
+		}
 		if(m_keys == null) {
 			return;
 		}

@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.Point2D;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.xtwsoft.webchart.ChartUtil;
 
@@ -15,8 +16,8 @@ public class HourRadarChart extends BaseChart {
 	private static final int m_marginHeight = 16;
 	private static final int m_marginWidth = 30;
 	
-	public HourRadarChart(JSONObject element,JSONObject legend,int imageWidth,int imageHeight) {
-		super(element,legend,imageWidth,imageHeight);
+	public HourRadarChart(JSONObject chartData,JSONObject legend,int imageWidth,int imageHeight) {
+		super(chartData,legend,imageWidth,imageHeight);
 	}
 	
 	
@@ -53,9 +54,8 @@ public class HourRadarChart extends BaseChart {
 	            BasicStroke.JOIN_MITER,
 	            10.0f, new float[]{1.1f}, 0.0f);
 		
-		String zebraColor = m_element.getString("zebra-color");
-		float zebraAlpha = m_element.getFloatValue("zebra-alpha");
-		Color newColor = ChartUtil.getColor(zebraColor, zebraAlpha);
+		String zebraColor = m_chartData.getString("zebra-color");
+		Color newColor = ChartUtil.getColor(zebraColor);
 		for (int i = 0; i < calibration; i++) {
 			int currentRadius = m_coordinateRadius - i * gridGap;
 			
@@ -116,30 +116,60 @@ public class HourRadarChart extends BaseChart {
 	
 	private void drawValue(Graphics2D g2 , int gridGap){
 		g2.setStroke(new BasicStroke(8, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-		for (int i = 0; i < 6; i++) {
-			Color xcolor = new Color( (int)(Math.random()*255) ,(int)(Math.random()*255) ,(int)(Math.random()*255));
-			g2.setColor( xcolor );
-			int currentRadius = m_coordinateRadius - i * gridGap - 4;
-			int startAngle =  (int)(Math.random()*180);
-			int angle = (int)(Math.random()*(180 - startAngle));
-			g2.drawArc(-currentRadius, -currentRadius,currentRadius * 2, currentRadius * 2, startAngle, angle);
-			
-			
-			double pointX = Math.cos(Math.toRadians(-startAngle)) * currentRadius ;
-			double pointY = Math.sin(Math.toRadians(-startAngle)) * currentRadius ;
-			g2.setColor(this.m_backgroundColor);
-			g2.fillOval((int)pointX -5 , (int)pointY -5 , 10, 10);
-			g2.setColor(xcolor);
-			g2.fillOval((int)pointX -3 , (int)pointY -3 , 6, 6);
-			
-			int endAngle = startAngle + angle;
-			pointX = Math.cos(Math.toRadians(-endAngle)) * currentRadius;
-			pointY = Math.sin(Math.toRadians(-endAngle)) * currentRadius;
-			g2.setColor(this.m_backgroundColor);
-			g2.fillOval((int)pointX -5 , (int)pointY -5 , 10, 10);
-			g2.setColor(xcolor);
-			g2.fillOval((int)pointX -3 , (int)pointY -3 , 6, 6);
-			
+		for(int i=0;i<this.m_values.size();i++) {
+			if(i >= 7) {
+				return;
+			}
+			JSONArray arr = m_values.getJSONArray(i);
+			if(arr.size() == 3) {
+				try {
+					int typeIndex = Integer.parseInt(arr.getString(0).trim()) - 1;
+					if(typeIndex >= 0 && typeIndex < this.m_keys.size()) {
+						
+					} else {
+						continue;
+					}
+					String time1 = arr.getString(1);
+					String time2 = arr.getString(2);
+					int pos1 = time1.indexOf(":");
+					int pos2 = time2.indexOf(":");
+					int minute1 = -1;
+					int minute2 = -1;
+					if(pos1 != -1 && pos2 != -1) {
+						minute1 = Integer.parseInt(time1.substring(pos1 + 1).trim());
+						minute2 = Integer.parseInt(time2.substring(pos2 + 1).trim());
+					}
+					if(minute1 >= 0 && minute1 <= 60 && minute2 >= 0 && minute2 <= 60 ) {
+						
+					} else {
+						continue;
+					}
+					JSONObject key = m_keys.getJSONObject(typeIndex);
+					Color color = ChartUtil.getColor(key.getString("colour"));
+					g2.setColor(color);
+					
+					int currentRadius = m_coordinateRadius - i * gridGap - 4;
+					int startAngle = 180 - minute1 * 3;
+					int endAngle = 180 - minute2 * 3;
+					g2.drawArc(-currentRadius, -currentRadius,currentRadius * 2, currentRadius * 2, startAngle, (endAngle - startAngle));
+					
+					double pointX = Math.cos(Math.toRadians(-startAngle)) * currentRadius ;
+					double pointY = Math.sin(Math.toRadians(-startAngle)) * currentRadius ;
+					g2.setColor(this.m_backgroundColor);
+					g2.fillOval((int)pointX -5 , (int)pointY -5 , 10, 10);
+					g2.setColor(color);
+					g2.fillOval((int)pointX -3 , (int)pointY -3 , 6, 6);
+					
+					pointX = Math.cos(Math.toRadians(-endAngle)) * currentRadius;
+					pointY = Math.sin(Math.toRadians(-endAngle)) * currentRadius;
+					g2.setColor(this.m_backgroundColor);
+					g2.fillOval((int)pointX -5 , (int)pointY -5 , 10, 10);
+					g2.setColor(color);
+					g2.fillOval((int)pointX -3 , (int)pointY -3 , 6, 6);
+				} catch(Exception ex) {
+					ex.printStackTrace();
+				}
+			}
 		}
 	}
 		

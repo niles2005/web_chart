@@ -15,8 +15,8 @@ import com.xtwsoft.webchart.ChartUtil;
 
 
 public class PieChart extends BaseChart {
-	public PieChart(JSONObject element,JSONObject legend,int imageWidth,int imageHeight) {
-		super(element,legend,imageWidth,imageHeight);
+	public PieChart(JSONObject chartData,JSONObject legend,int imageWidth,int imageHeight) {
+		super(chartData,legend,imageWidth,imageHeight);
 	}
 	
 	public void draw(Graphics2D g2) {
@@ -84,14 +84,14 @@ public class PieChart extends BaseChart {
 			g2.setColor(Color.lightGray);
 			g2.fillArc(-r, -r, r * 2, r * 2, 0, 360);
 			
-			double holePosRate = getDouble(m_element,"hole-pos-rate");
+			double holePosRate = getDouble(m_chartData,"hole-pos-rate");
 			if(holePosRate > 0) {
 				int innerR = (int)(pieRadius * holePosRate);
 				g2.setColor(Color.white);
 				g2.fillOval(-innerR, -innerR, innerR * 2, innerR * 2);
 			}
 		} else {
-			int pointerIndex = getInt(m_element,"pointer-index",-1);
+			int pointerIndex = getInt(m_chartData,"pointer-index",-1);
 			
 			drawPie(g2,pieRadius,totalValue);
 			drawPieHoleAndLine(g2,pieRadius,totalValue);
@@ -113,7 +113,7 @@ public class PieChart extends BaseChart {
 		int valueCount = m_values.size();
 		
 		int r = pieRadius;
-		int startAnglue0 = (int)this.getDouble(m_element,"start-angle");
+		int startAnglue0 = (int)this.getDouble(m_chartData,"start-angle");
 		int startAnglue = startAnglue0; 
 		int totalAngle = 360 + startAnglue0;
 		for(int i=0;i<valueCount;i++) {
@@ -130,14 +130,14 @@ public class PieChart extends BaseChart {
 	}
 	
 	private void drawPieHoleAndLine(Graphics2D g2,int pieRadius,double totalValue) {
-		double holePosRate = getDouble(m_element,"hole-pos-rate");
+		double holePosRate = getDouble(m_chartData,"hole-pos-rate");
 		if(holePosRate > 0) {
 			int innerR = (int)(pieRadius * holePosRate);
 			g2.setColor(Color.white);
 			g2.fillOval(-innerR, -innerR, innerR * 2, innerR * 2);
 		}
 		
-		double splitLineWidth = getDouble(m_element,"split-line-width");
+		double splitLineWidth = getDouble(m_chartData,"split-line-width");
 		if(splitLineWidth > 0) {
 			Stroke defaultStroke = g2.getStroke();
 			if(splitLineWidth > 0) {
@@ -146,7 +146,7 @@ public class PieChart extends BaseChart {
 			}
 
 			int valueCount = m_values.size();
-			int startAnglue0 = (int)this.getDouble(m_element,"start-angle");
+			int startAnglue0 = (int)this.getDouble(m_chartData,"start-angle");
 			int startAnglue = startAnglue0; 
 			int totalAngle = 360 + startAnglue0;
 			int lineR = (int)(pieRadius * 1.1);//84;
@@ -176,12 +176,12 @@ public class PieChart extends BaseChart {
 		Font bakFont = g2.getFont();
 		Font newFont = new Font(Font.SANS_SERIF, getFontFamily(), 12);
 		g2.setFont(newFont);
-		int startAnglue0 = (int)this.getDouble(m_element,"start-angle");
+		int startAnglue0 = (int)this.getDouble(m_chartData,"start-angle");
 		int startAnglue = startAnglue0; 
 		int totalAngle = 360 + startAnglue0;
 		
 		int valueCount = m_values.size();
-		float labelPosRate = m_element.getFloatValue("label-pos-rate");
+		float labelPosRate = m_chartData.getFloatValue("label-pos-rate");
 		int labelR = (int)(pieRadius * labelPosRate);
 		FontMetrics fm = g2.getFontMetrics();
 		for(int i=0;i<valueCount;i++) {
@@ -217,7 +217,7 @@ public class PieChart extends BaseChart {
 	}
 	
 	private void drawPointer(Graphics2D g2,int pieRadius,double totalValue,int pointerAngle) {
-		double holePosRate = getDouble(m_element,"hole-pos-rate");
+		double holePosRate = getDouble(m_chartData,"hole-pos-rate");
 		double pointerRadius = pieRadius * 0.75;
 		if(holePosRate > 0) {
 			int innerR = (int)(pieRadius * holePosRate * holePosRate / 2);

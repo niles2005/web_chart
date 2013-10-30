@@ -20,8 +20,8 @@ public class LoopChart extends BaseChart {
 	private double m_overlapRete = 0.8;
 	private Stroke defaultStroke = null;
 	
-	public LoopChart(JSONObject element,JSONObject legend,int imageWidth,int imageHeight) {
-		super(element,legend,imageWidth,imageHeight);
+	public LoopChart(JSONObject chartData,JSONObject legend,int imageWidth,int imageHeight) {
+		super(chartData,legend,imageWidth,imageHeight);
 		m_shapMaxWidth = m_imageWidth * 0.7 * 0.9;
 		m_shapMaxHeight = m_imageHeight * 0.9;
 	}
