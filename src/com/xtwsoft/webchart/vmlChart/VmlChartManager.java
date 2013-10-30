@@ -27,6 +27,8 @@ public class VmlChartManager {
 			return new VmlLineChart(chartData,width,height).buildChart();
 		} else if("bar-stack".equals(type)) {
 			return new VmlBarStackChart(chartData,width,height).buildChart();
+		} else if("bar-stack-full".equals(type)) {
+			return new VmlBarStackFullChart(chartData,width,height).buildChart();
 		} else if("h-bar-stack".equals(type)) {
 			return new VmlHBarStackChart(chartData,width,height).buildChart();
 		}
