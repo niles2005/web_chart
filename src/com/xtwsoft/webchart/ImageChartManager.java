@@ -34,7 +34,7 @@ public class ImageChartManager {
 	public void drawChart(Graphics2D g2,JSONObject chartData,int imageWidth,int imageHeight) {
 		Color bgColor = null;
 		if(chartData != null) {
-			bgColor = ChartUtil.getColor(chartData.getString("bg_colour"));
+			bgColor = ChartUtil.getColor(chartData.getString("bg-colour"));
 		}
 		if(bgColor == null) {
 			bgColor = Color.white;

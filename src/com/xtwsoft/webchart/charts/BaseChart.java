@@ -27,7 +27,7 @@ public abstract class BaseChart {
 		m_values = element.getJSONArray("values");
 		m_imageWidth = imageWidth;
 		m_imageHeight = imageHeight;
-		Color bgColor = ChartUtil.getColor(element.getString("bg_colour"));
+		Color bgColor = ChartUtil.getColor(element.getString("bg-colour"));
 		if(bgColor != null) {
 			m_backgroundColor = bgColor;
 		}
