@@ -7,8 +7,8 @@ import java.util.Comparator;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
-public class VmlBarStackChart extends BaseVmlChart {
-	public VmlBarStackChart(JSONObject chartData,int width,int height) {
+public class VmlBarGroupChart extends BaseVmlChart {
+	public VmlBarGroupChart(JSONObject chartData,int width,int height) {
 		super(chartData,width,height);
 	}
 	
@@ -16,10 +16,10 @@ public class VmlBarStackChart extends BaseVmlChart {
     	drawXAxisAndLabels(strBuff);
     	drawYAxisAndLabels(strBuff);
         
-    	drawBarStack(strBuff);
+    	drawBarGroup(strBuff);
     }
 	
-    public void drawBarStack(StringBuffer strBuff) {
+    public void drawBarGroup(StringBuffer strBuff) {
     	JSONObject[] keyArray = new JSONObject[m_keys.size()]; 
     	for(int i=0;i<m_keys.size();i++) {
     		JSONObject key = m_keys.getJSONObject(i);
@@ -53,31 +53,24 @@ public class VmlBarStackChart extends BaseVmlChart {
     	String text = xLabel.getString("text");
     	int x = xPos - m_subXBarWidth;
     	int w = m_subXBarWidth * 2;
-//    	float totalValue = 0;
-//    	for(int i=1;i<arr.size();i++) {
-//    		Float fValue = arr.getFloat(i);
-//    		if(fValue != null) {
-//        		totalValue += fValue.floatValue();
-//    		}
-//    	}
-    	float value = 0;
-    	int lastY = getYPos(0);
+    	
+        double eachWidth = w / keyArray.length;
+    	int maxY = getYPos(0);
     	for(int i=0;i<keyArray.length;i++) {
     		JSONObject key = keyArray[i];
     		String colour = key.getString("colour");
     		String name = key.getString("text");
     		Float fValue = arr.getFloatValue(i + 1);
     		if(fValue != null) {
-        		value += fValue.floatValue();
-            	int y = getYPos(value);
+            	int y = getYPos(fValue.floatValue());
     			String label = text + ":" + name + ":" + arr.getString(i + 1);
             	
-            	int height = lastY - y;
-            	strBuff.append("<v:rect style=' WIDTH: " + w + "px;  HEIGHT: " + height + "px; TOP: " + y + "px; LEFT: " + x + "px' title=" + label + " coordsize = '21600,21600' fillColor='" + colour + "'>\r\n");
+            	int height = maxY - y;
+            	strBuff.append("<v:rect style=' WIDTH: " + eachWidth + "px;  HEIGHT: " + height + "px; TOP: " + y + "px; LEFT: " + x + "px' title=" + label + " coordsize = '21600,21600' fillColor='" + colour + "'>\r\n");
             	strBuff.append("<v:stroke opacity = '0'>\r\n");
     			strBuff.append("</v:stroke>\r\n");
             	strBuff.append("</v:rect>\r\n");
-            	lastY = y;
+            	x += eachWidth;
     		}
     	}
     }

@@ -56,27 +56,30 @@ public abstract class BaseVmlChart {
 		m_keys = chartData.getJSONArray("keys");
 		
 		m_xAxis = chartData.getJSONObject("x-axis");
-		m_xLabels = m_xAxis.getJSONArray("labels");
+		if(m_xAxis != null) {
+			m_xLabels = m_xAxis.getJSONArray("labels");
 
-		if(m_xAxis.get("min") == null || m_xAxis.get("max") == null) {
-            this.m_xMin = this.m_xLabels.getJSONObject(0).getFloatValue("x");
-            this.m_xMax = this.m_xLabels.getJSONObject(this.m_xLabels.size() - 1).getFloatValue("x");
-		} else {
-			m_xMin = this.m_xAxis.getFloat("min");
-			m_xMax = this.m_xAxis.getFloat("max");
+			if(m_xAxis.get("min") == null || m_xAxis.get("max") == null) {
+	            this.m_xMin = this.m_xLabels.getJSONObject(0).getFloatValue("x");
+	            this.m_xMax = this.m_xLabels.getJSONObject(this.m_xLabels.size() - 1).getFloatValue("x");
+			} else {
+				m_xMin = this.m_xAxis.getFloat("min");
+				m_xMax = this.m_xAxis.getFloat("max");
+			}
 		}
 		
 		
 		m_yAxis = chartData.getJSONObject("y-axis");
-		m_yLabels = m_yAxis.getJSONArray("labels");
-		
-		
-		if(m_yAxis.get("min") == null || m_yAxis.get("max") == null) {
-            this.m_yMin = this.m_yLabels.getJSONObject(0).getFloatValue("y");
-            this.m_yMax = this.m_yLabels.getJSONObject(this.m_yLabels.size() - 1).getFloatValue("y");
-		} else {
-			m_yMin = this.m_yAxis.getFloat("min");
-			m_yMax = this.m_yAxis.getFloat("max");
+		if(m_yAxis != null) {
+			m_yLabels = m_yAxis.getJSONArray("labels");
+			
+			if(m_yAxis.get("min") == null || m_yAxis.get("max") == null) {
+	            this.m_yMin = this.m_yLabels.getJSONObject(0).getFloatValue("y");
+	            this.m_yMax = this.m_yLabels.getJSONObject(this.m_yLabels.size() - 1).getFloatValue("y");
+			} else {
+				m_yMin = this.m_yAxis.getFloat("min");
+				m_yMax = this.m_yAxis.getFloat("max");
+			}
 		}
 		
 		m_gridX = m_gridMarginLeft;

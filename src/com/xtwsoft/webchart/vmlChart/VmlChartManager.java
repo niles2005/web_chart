@@ -29,8 +29,12 @@ public class VmlChartManager {
 			return new VmlBarStackChart(chartData,width,height).buildChart();
 		} else if("bar-stack-full".equals(type)) {
 			return new VmlBarStackFullChart(chartData,width,height).buildChart();
+        } else if("bar-group".equals(type)) {
+            return new VmlBarGroupChart(chartData,width,height).buildChart();
 		} else if("h-bar-stack".equals(type)) {
 			return new VmlHBarStackChart(chartData,width,height).buildChart();
+		} else if("line-pie".equals(type)) {
+			return new VmlLinePieChart(chartData,width,height).buildChart();
 		}
 		return null;
 	}
