@@ -98,6 +98,7 @@ public class TestImage extends JFrame {
         contentPane.add(m_panel,BorderLayout.CENTER);
         
         ArrayList urlItemList = new ArrayList();
+        urlItemList.add(new UrlItem("http://127.0.0.1/%E4%BA%A4%E9%80%9A%E4%BF%A1%E5%8F%B7%E4%BC%98%E5%8C%96%E6%8E%A7%E5%88%B6/%E4%BF%A1%E5%8F%B7%E4%BC%98%E5%8C%96%E6%80%A7%E8%83%BD%E8%AF%84%E4%BC%B0/%E5%B9%B2%E7%BA%BF%E4%BC%98%E5%8C%96.page/mlPerformanceAnalyze.action.json"));
         urlItemList.add(new UrlItem("http://127.0.0.1/%E4%BA%A4%E9%80%9A%E7%8A%B6%E5%86%B5%E9%A2%84%E6%B5%8B%E9%A2%84%E6%8A%A5/%E8%B7%AF%E6%AE%B5%E9%A2%84%E6%B5%8B%E5%88%86%E6%9E%90.page/trafficIncidentStatistics.action.jsonx"));
         urlItemList.add(new UrlItem("http://127.0.0.1/%E4%BA%A4%E9%80%9A%E7%8A%B6%E6%80%81%E7%BB%BC%E5%90%88%E7%9B%91%E6%B5%8B/%E9%87%8D%E7%82%B9%E8%B7%AF%E6%AE%B5%E7%BB%BC%E5%90%88%E6%80%81%E5%8A%BF.page/speRoadStatus.jsonx"));
         urlItemList.add(new UrlItem("http://127.0.0.1/%E4%BA%A4%E9%80%9A%E7%8A%B6%E5%86%B5%E9%A2%84%E6%B5%8B%E9%A2%84%E6%8A%A5/%E8%B7%AF%E6%AE%B5%E9%A2%84%E6%B5%8B%E5%88%86%E6%9E%90.page/hourRadar.jsonx"));
