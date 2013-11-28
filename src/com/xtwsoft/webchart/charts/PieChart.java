@@ -9,6 +9,7 @@ import java.awt.RenderingHints;
 import java.awt.Stroke;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 
 import com.alibaba.fastjson.JSONObject;
 import com.xtwsoft.webchart.ChartUtil;
@@ -76,7 +77,7 @@ public class PieChart extends BaseChart {
 		int valueCount = m_values.size();
 		for(int i=0;i<valueCount;i++) {
 			JSONObject value = m_values.getJSONObject(i);
-			totalValue += this.getDouble(value,"value");
+			totalValue += value.getDoubleValue("value");
 		}
 		if(totalValue == 0) {
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -116,16 +117,28 @@ public class PieChart extends BaseChart {
 		int startAnglue0 = (int)this.getDouble(m_chartData,"start-angle");
 		int startAnglue = startAnglue0; 
 		int totalAngle = 360 + startAnglue0;
+		ArrayList list = new ArrayList();
 		for(int i=0;i<valueCount;i++) {
 			JSONObject value = m_values.getJSONObject(i);
-			g2.setColor(ChartUtil.getColor(value.getString("colour")));
-			int angle = (int)(360.0 * value.getDoubleValue("value") / totalValue);
-			
-			if(i == valueCount - 1) {
-				angle = totalAngle - startAnglue;
+			double v = value.getDoubleValue("value");
+			if(v != 0) {
+				list.add(value);
 			}
-			g2.fillArc(-r, -r, r * 2, r * 2, startAnglue, angle);
-			startAnglue += angle;
+		}
+		int releaseAngle = 360;
+		for(int i=0;i<list.size();i++) {
+			JSONObject value = (JSONObject)list.get(i);
+			g2.setColor(ChartUtil.getColor(value.getString("colour")));
+			double v = value.getDoubleValue("value");
+			if(v != 0) {
+				int angle = (int)(360.0 * value.getDoubleValue("value") / totalValue);
+				if(i == list.size() - 1) {
+					angle = releaseAngle;
+				}
+				g2.fillArc(-r, -r, r * 2, r * 2, startAnglue, angle);
+				startAnglue += angle;
+				releaseAngle -= angle;
+			}
 		}
 	}
 	
