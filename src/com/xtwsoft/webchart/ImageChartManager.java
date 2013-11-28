@@ -7,12 +7,14 @@ import java.io.ByteArrayOutputStream;
 
 import javax.imageio.ImageIO;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.xtwsoft.webchart.charts.HourRadarChart;
 import com.xtwsoft.webchart.charts.LoopChart;
 import com.xtwsoft.webchart.charts.PieChart;
 import com.xtwsoft.webchart.charts.ServiceChart;
 import com.xtwsoft.webchart.charts.WeekCircleChart;
+import com.xtwsoft.webchart.sketch.TrunkRoad;
 
 public class ImageChartManager {
 	private static ImageChartManager m_instance = null;
@@ -55,6 +57,11 @@ public class ImageChartManager {
 		} else if("hourRadar".equals(type)) {
 			new HourRadarChart(chartData,legend,imageWidth,imageHeight).draw(g2);
 		} 
+		
+		JSONArray crossingList = chartData.getJSONArray("intersectionMsgList");
+		if(crossingList != null && crossingList.size() > 0){
+			new TrunkRoad(chartData,imageWidth,imageHeight).draw(g2);
+		}
 	}
 
 	public byte[] buildImage(int imageWidth,int imageHeight,JSONObject chartData) {
