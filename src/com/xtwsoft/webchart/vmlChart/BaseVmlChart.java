@@ -290,11 +290,32 @@ public abstract class BaseVmlChart {
             int y0 = m_gridY;
             int y1 = m_gridY + m_gridH;
             
-            boolean gridVisible = getBoolean(m_xAxis,"grid-visible",true);
+            Object gridVisible = m_xAxis.get("grid-visible");
+            if(gridVisible == null) {
+                gridVisible = true; 
+             }
+            
             Hashtable labelHash = new Hashtable(); 
             this.m_xAxis.put("labelHash", labelHash);
             for(int i=0;i<xNum;i++) {
 				JSONObject xLabel = m_xLabels.getJSONObject(i);
+				
+				Object objShow = xLabel.get("show");
+				boolean show = true;
+				if(objShow == null ) {//缺省为空时，显示标题
+					show = true;
+				} else if(objShow instanceof Boolean) {
+					show = ((Boolean)objShow).booleanValue();
+				}
+				
+                boolean xGridVisible = true;
+                if(gridVisible instanceof Boolean) {
+                	xGridVisible = (Boolean)gridVisible;
+                }
+                if(!show && "onlyShow".equals(gridVisible)) {
+                    xGridVisible = false;
+                }
+				
                 int xx = (int)(this.getXPos(xLabel.getFloatValue("x")));
                 xLabel.put("xPos", xx);
                 
@@ -302,7 +323,7 @@ public abstract class BaseVmlChart {
 				if(xText != null) {
 					labelHash.put(xText, xLabel);
 				}
-                if(gridVisible) {
+                if(xGridVisible) {
                     String fillStyle = xLabel.getString("fill-style");
                     if(fillStyle != null) {
                     	VmlColor vmlColor = new VmlColor(fillStyle);
@@ -329,13 +350,6 @@ public abstract class BaseVmlChart {
                 }
 				
 				
-				Object objShow = xLabel.get("show");
-				boolean show = true;
-				if(objShow == null ) {//缺省为空时，显示标题
-					show = true;
-				} else if(objShow instanceof Boolean) {
-					show = ((Boolean)objShow).booleanValue();
-				}
 				if(show) {
 //					判断是否为中文
 					if(xText.length() > 0) {
@@ -372,7 +386,7 @@ public abstract class BaseVmlChart {
                     drawLine(strBuff,m_gridX,yy,m_gridX + m_gridW,yy,gridColour,"0.5pt",dash);
                 }
                 
-                drawLabel(strBuff,2,yy-12,yLabel.getString("text"),"8");
+                drawLabel(strBuff,-5,yy-12,yLabel.getString("text"),"8");
             }
     	}
 	}
