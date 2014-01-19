@@ -57,6 +57,9 @@ public class VmlBarStackFullChart extends BaseVmlChart {
     	for(int i=1;i<arr.size();i++) {
     		totalValue += arr.getFloat(i);
     	}
+    	if(totalValue == 0) {
+    		return;
+    	}
     	float value = 0;
     	int lastY = getYPos(0);
     	for(int i=0;i<keyArray.length;i++) {
