@@ -66,6 +66,7 @@ public class VmlBarStackChart extends BaseVmlChart {
     		JSONObject key = keyArray[i];
     		String colour = key.getString("colour");
     		String name = key.getString("text");
+    		
     		Float fValue = arr.getFloatValue(i + 1);
     		if(fValue != null) {
         		value += fValue.floatValue();

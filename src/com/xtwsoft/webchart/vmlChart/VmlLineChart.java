@@ -92,7 +92,7 @@ public class VmlLineChart extends BaseVmlChart {
                 			int width = thisDrawPointRadius * 2;
                 			int height = thisDrawPointRadius * 2;
                         	
-                			strBuff.append("<v:oval style='WIDTH: " + width + "px; HEIGHT: " + height + "px; TOP: " + yPos + "px; LEFT: " + xPos + "px' title=" + label + " coordsize = '21600,21600' fillcolor = 'white' strokecolor = '" + colour + "' strokeweight = '1.5pt'>\r\n");
+                			strBuff.append("<v:oval style='WIDTH: " + width + "px; HEIGHT: " + height + "px; TOP: " + yPos + "px; LEFT: " + xPos + "px' coordsize = '21600,21600' fillcolor = 'white' strokecolor = '" + colour + "' strokeweight = '1.5pt'>\r\n");
                 			strBuff.append("</v:oval>\r\n");
                         } else if(thisDrawPointRadius == thisDrawPointWhiteRadius) {//相等，白环不画
                         	int yPos = getYPos(v) - thisDrawPointRadius;
@@ -101,7 +101,7 @@ public class VmlLineChart extends BaseVmlChart {
                 			int width = thisDrawPointRadius * 2;
                 			int height = thisDrawPointRadius * 2;
                         	
-                			strBuff.append("<v:oval style='WIDTH: " + width + "px; HEIGHT: " + height + "px; TOP: " + yPos + "px; LEFT: " + xPos + "px' title=" + label + " coordsize = '21600,21600' fillcolor = '" + colour + "' >\r\n");
+                			strBuff.append("<v:oval style='WIDTH: " + width + "px; HEIGHT: " + height + "px; TOP: " + yPos + "px; LEFT: " + xPos + "px' coordsize = '21600,21600' fillcolor = '" + colour + "' >\r\n");
                 			strBuff.append("</v:oval>\r\n");
                         } else {
                         	int yPos = getYPos(v) - thisDrawPointWhiteRadius;
@@ -110,7 +110,7 @@ public class VmlLineChart extends BaseVmlChart {
                 			int width = thisDrawPointWhiteRadius * 2;
                 			int height = thisDrawPointWhiteRadius * 2;
 
-                			strBuff.append("<v:oval style='WIDTH: " + width + "px; HEIGHT: " + height + "px; TOP: " + yPos + "px; LEFT: " + xPos + "px' title=" + label + " coordsize = '21600,21600' fillcolor = '" + colour + "' strokecolor = 'white' strokeweight = '1.5pt'>\r\n");
+                			strBuff.append("<v:oval style='WIDTH: " + width + "px; HEIGHT: " + height + "px; TOP: " + yPos + "px; LEFT: " + xPos + "px' coordsize = '21600,21600' fillcolor = '" + colour + "' strokecolor = 'white' strokeweight = '1.5pt'>\r\n");
                 			strBuff.append("</v:oval>\r\n");
                         }        	
             		}
