@@ -164,12 +164,32 @@ public class WeekCircleChart extends BaseChart {
 			g2.drawString(labelString, (int)x, (int)y );
 		}
 		
+		float maxValue = 0;
+		for(int i=0;i<m_values.size();i++) {
+			JSONObject item = m_values.getJSONObject(i);
+			JSONArray valueArr = item.getJSONArray("value");
+			for(int j=0;j<valueArr.size();j++) {
+				if(j < 24) {
+					int v = valueArr.getIntValue(j);
+					if(v > 0 && v > maxValue) {
+						maxValue = v;
+					}
+				}
+			}
+		}
+		
+		
 		for(int i=0;i<m_values.size();i++) {
 			JSONObject item = m_values.getJSONObject(i);
 			JSONArray valueArr = item.getJSONArray("value");
 			int cr = (int)(1.0 * (drawCircleNum - i) / drawCircleNum * r);
 			float alpha = this.getFloat(item, "alpha",0.65f);
-			g2.setColor(ChartUtil.getColor(item.getString("colour"),alpha));
+			String strColor = item.getString("colour");
+			if(strColor == null) {//没有color，从 key取color
+				JSONObject key = m_keys.getJSONObject(i);
+				strColor = key.getString("colour");
+			}
+			g2.setColor(ChartUtil.getColor(strColor,alpha));
 
 			for(int j=0;j<valueArr.size();j++) {
 				if(j < 24) {
@@ -181,7 +201,8 @@ public class WeekCircleChart extends BaseChart {
 						double y =  -cr * Math.sin(angle * Math.PI / 180);
 						
 						g2.translate(x, y);
-						g2.fillOval(-v, -v, v * 2, v * 2);
+						int rr = (int)(10.0 * v / maxValue);
+						g2.fillOval(-rr, -rr, rr * 2, rr * 2);
 						g2.translate(-x, -y);
 					}
 				}

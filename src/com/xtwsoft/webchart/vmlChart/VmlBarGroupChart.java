@@ -60,18 +60,23 @@ public class VmlBarGroupChart extends BaseVmlChart {
     		JSONObject key = keyArray[i];
     		String colour = key.getString("colour");
     		String name = key.getString("text");
-    		Float fValue = arr.getFloatValue(i + 1);
-    		if(fValue != null) {
-            	int y = getYPos(fValue.floatValue());
-    			String label = text + ":" + name + ":" + arr.getString(i + 1);
-            	
-            	int height = maxY - y;
-            	strBuff.append("<v:rect style=' WIDTH: " + eachWidth + "px;  HEIGHT: " + height + "px; TOP: " + y + "px; LEFT: " + x + "px' title=" + label + " coordsize = '21600,21600' fillColor='" + colour + "'>\r\n");
-            	strBuff.append("<v:stroke opacity = '0'>\r\n");
-    			strBuff.append("</v:stroke>\r\n");
-            	strBuff.append("</v:rect>\r\n");
-            	x += eachWidth;
-    		}
+    		
+			try {
+        		Float fValue = arr.getFloatValue(i + 1);
+        		if(fValue != null) {
+                	int y = getYPos(fValue.floatValue());
+        			String label = text + ":" + name + ":" + arr.getString(i + 1);
+                	
+                	int height = maxY - y;
+                	strBuff.append("<v:rect style=' WIDTH: " + eachWidth + "px;  HEIGHT: " + height + "px; TOP: " + y + "px; LEFT: " + x + "px' title=" + label + " coordsize = '21600,21600' fillColor='" + colour + "'>\r\n");
+                	strBuff.append("<v:stroke opacity = '0'>\r\n");
+        			strBuff.append("</v:stroke>\r\n");
+                	strBuff.append("</v:rect>\r\n");
+                	x += eachWidth;
+        		}
+			} catch(Exception ex) {
+//				ex.printStackTrace();
+			}
     	}
     }
 }
