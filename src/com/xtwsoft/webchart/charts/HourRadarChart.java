@@ -104,7 +104,7 @@ public class HourRadarChart extends BaseChart {
 		g2.setColor(Color.GRAY);
 		int originhour = Integer.parseInt(m_endTime.substring(0 , m_endTime.indexOf(":")));
 		int hour = originhour;
-		int time = Integer.parseInt(m_endTime.substring(m_endTime.indexOf(":")+1));
+		int time = Integer.parseInt(m_endTime.substring(m_endTime.indexOf(":")+1).trim());
 		g2.drawString(m_endTime, m_coordinateRadius + 4, 0);
 		for (int i = 0; i < 6; i++) {
 			
@@ -132,6 +132,7 @@ public class HourRadarChart extends BaseChart {
 	
 	private void drawValue(Graphics2D g2 , int gridGap){
 		g2.setStroke(new BasicStroke(8, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+		
 		for(int i=0;i<this.m_values.size();i++) {
 			if(i >= 7) {
 				return;
@@ -149,13 +150,20 @@ public class HourRadarChart extends BaseChart {
 					String time2 = arr.getString(2);
 					int pos1 = time1.indexOf(":");
 					int pos2 = time2.indexOf(":");
+					int hourDiff = Integer.parseInt(time2.substring(0,pos2).trim()) - Integer.parseInt(time1.substring(0,pos1).trim());
 					int minute1 = -1;
 					int minute2 = -1;
+					int minuteDiff = -1;
+					int minuteStart = 0;
 					if(pos1 != -1 && pos2 != -1) {
 						minute1 = Integer.parseInt(time1.substring(pos1 + 1).trim());
 						minute2 = Integer.parseInt(time2.substring(pos2 + 1).trim());
+						minuteDiff = minute2 - minute1;
+						if( hourDiff > 0 ) {
+							minuteDiff += 60;
+						}
 					}
-					if(minute1 >= 0 && minute1 <= 60 && minute2 >= 0 && minute2 <= 60 ) {
+					if( minuteDiff >=0 && minuteDiff <= 60 ) {
 						
 					} else {
 						continue;
@@ -165,8 +173,17 @@ public class HourRadarChart extends BaseChart {
 					g2.setColor(color);
 					
 					int currentRadius = m_coordinateRadius - i * gridGap - 4;
-					int startAngle = 180 - minute1 * 3;
-					int endAngle = 180 - minute2 * 3;
+					int zeroDegreeMinute = Integer.parseInt(m_startTime.substring(m_startTime.indexOf(":")+1).trim());
+					
+					
+					minuteStart = minute1 - zeroDegreeMinute;
+					if( minuteStart < 0 ){
+						minuteStart += 60;
+					}
+					
+					
+					int startAngle = 180 - minuteStart * 3;//minute值域为0-60，要放大到180，所以要乘3
+					int endAngle = 180 - (minuteStart + minuteDiff)* 3;
 					g2.drawArc(-currentRadius, -currentRadius,currentRadius * 2, currentRadius * 2, startAngle, (endAngle - startAngle));
 					
 					double pointX = Math.cos(Math.toRadians(-startAngle)) * currentRadius ;
