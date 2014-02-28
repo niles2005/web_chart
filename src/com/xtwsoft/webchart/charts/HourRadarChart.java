@@ -15,6 +15,8 @@ public class HourRadarChart extends BaseChart {
 	private int m_coordinateRadius ; 
 	private static final int m_marginHeight = 16;
 	private static final int m_marginWidth = 30;
+	private String m_startTime;
+	private String m_endTime;
 	
 	public HourRadarChart(JSONObject chartData,JSONObject legend,int imageWidth,int imageHeight) {
 		super(chartData,legend,imageWidth,imageHeight);
@@ -37,6 +39,9 @@ public class HourRadarChart extends BaseChart {
 		
 		int calibration = 7;	
 		int gridGap = m_coordinateRadius / calibration;
+		
+		m_startTime = m_chartData.getString("startTime");
+		m_endTime = m_chartData.getString("endTime");
 		
 		drawGrid(g2 ,gridGap,calibration);
 		drawAxis(g2);
@@ -91,16 +96,27 @@ public class HourRadarChart extends BaseChart {
 	}
 	
 	private void drawMark(Graphics2D g2){
+		
+		
 		int degreeGap = 180 / 6;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
 		g2.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 10));
 		g2.setColor(Color.GRAY);
-		int time = 50;
-		g2.drawString("8:00", m_coordinateRadius + 4, 0);
+		int originhour = Integer.parseInt(m_endTime.substring(0 , m_endTime.indexOf(":")));
+		int hour = originhour;
+		int time = Integer.parseInt(m_endTime.substring(m_endTime.indexOf(":")+1));
+		g2.drawString(m_endTime, m_coordinateRadius + 4, 0);
 		for (int i = 0; i < 6; i++) {
-			int currentTime = time - i * 10;
+			
+			int currentTime = time - ( i + 1 ) * 10;
+			if( currentTime < 0 ){
+				currentTime = 60 + currentTime;
+				if (originhour == hour) {
+					originhour = hour - 1;
+				}
+			}
 			int currentAngle = (i + 1)* degreeGap;
-			String currentTimeStr = "7:"+ currentTime;
+			String currentTimeStr = originhour + ":"+ currentTime;
 			if (currentTime == 0){
 				currentTimeStr += "0";
 			}
