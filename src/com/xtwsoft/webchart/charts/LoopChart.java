@@ -127,6 +127,9 @@ public class LoopChart extends BaseChart {
 		g2.drawOval( -pointRadius*3, -legendY - pointRadius, pointRadius*2, pointRadius*2);
 		
 		float textX = (float)(m_imageWidth * 0.95 - m_shapMaxWidth/2 - legendWidth);
+		if(textX < 0) {
+			textX = 0;
+		}
 		float textY = -legendY;
 		g2.drawLine(0, (int)textY, (int)textX, (int)textY);
 		
