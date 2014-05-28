@@ -2,6 +2,7 @@ package com.xtwsoft.webchart.charts;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -78,7 +79,6 @@ public class LoopChart extends BaseChart {
 				drawLoop(g2,outterR,innerR,m_startAngle, angle, loopColorStr,holeColorStr , alpha);
 				int legendY = outterR - (int)(radius * shrinkStep/2);
 				int pointRadius = (int)(radius * shrinkStep/2 *0.3);
-				g2.setFont(new java.awt.Font("SimSun",java.awt.Font.PLAIN,12));//宋体
 				drawLegend(g2,legendY,pointRadius,legendWidth,loopColorStr,i);
 			}else{
 				drawAlphaLoop(g2,outterR,innerR,m_startAngle, angle, loopColorStr,alpha);
@@ -123,9 +123,9 @@ public class LoopChart extends BaseChart {
 	}
 
 	private void drawLegend(Graphics2D g2,int legendY, int pointRadius, double legendWidth,String colorStr,int textIndex) {
+		g2.setStroke(new BasicStroke(1));
 		g2.setColor(Color.BLACK);
 		g2.drawOval( -pointRadius*3, -legendY - pointRadius, pointRadius*2, pointRadius*2);
-		
 		float textX = (float)(m_imageWidth * 0.95 - m_shapMaxWidth/2 - legendWidth);
 		if(textX < 0) {
 			textX = 0;
@@ -138,7 +138,6 @@ public class LoopChart extends BaseChart {
 		g2.setColor(color);
 		JSONObject key = m_keys.getJSONObject(textIndex);
 		String text = key.getString("text");
-		g2.setFont(g2.getFont().deriveFont(this.getFloat(key, "font-size", 12)));
 		
 		FontMetrics fm = g2.getFontMetrics();
 		Rectangle2D rect = fm.getStringBounds(key.getString("text"), g2);
@@ -146,7 +145,7 @@ public class LoopChart extends BaseChart {
 		float offsetX = 5;
 		g2.drawString(text, textX + offsetX, textY + offsetY);
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		
+		g2.setStroke(defaultStroke);
 	}
 	
 

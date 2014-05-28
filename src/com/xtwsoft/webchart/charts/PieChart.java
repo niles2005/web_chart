@@ -186,9 +186,6 @@ public class PieChart extends BaseChart {
 	
 	private void drawPieLabel(Graphics2D g2,int pieRadius,double totalValue,int pointerIndex) {
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		Font bakFont = g2.getFont();
-		Font newFont = new Font(Font.SANS_SERIF, getFontFamily(), 12);
-		g2.setFont(newFont);
 		int startAnglue0 = (int)this.getDouble(m_chartData,"start-angle");
 		int startAnglue = startAnglue0; 
 		int totalAngle = 360 + startAnglue0;
@@ -201,8 +198,6 @@ public class PieChart extends BaseChart {
 			JSONObject value = m_values.getJSONObject(i);
 			double v = value.getDoubleValue("value");
 			if(v > 0) {
-				g2.setFont(g2.getFont().deriveFont(this.getFloat(value, "font-size", 12)));
-				
 				int angle = (int)(360.0 * value.getFloatValue("value") / totalValue);
 				if(i == valueCount - 1) {
 					angle = totalAngle - startAnglue;
@@ -225,7 +220,6 @@ public class PieChart extends BaseChart {
 				g2.translate(-x, -y);
 			}
 		}
-		g2.setFont(bakFont);
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
 	}
 	

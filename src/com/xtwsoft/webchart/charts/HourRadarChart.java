@@ -127,6 +127,7 @@ public class HourRadarChart extends BaseChart {
 			g2.drawString(currentTimeStr, (int)(pointX - offsetX) , (int)pointY );
 			
 		}
+		g2.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 	}
 	

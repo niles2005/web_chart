@@ -64,6 +64,7 @@ public class TrunkRoad {
 	
 	
 	public void draw(Graphics2D g2) {
+		g2.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		String endId = m_chartData.getString("end_intersection");
 		String interSectionId = m_chartData.getString("start_intersection");
@@ -109,7 +110,6 @@ public class TrunkRoad {
 		if(crossingName.split("/").length >=1 ) {
 			crossingName = crossingName.split("/")[0];
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
-			g2.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
 			g2.setColor(Color.GRAY);
 			g2.drawString(crossingName, 0, 0);
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -146,7 +146,6 @@ public class TrunkRoad {
 	
 	private void drawTrunk(Graphics2D g2, String trunkName){
 		if(trunkName.split("/").length >=2 ) {
-			g2.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
 			g2.setColor(Color.GRAY);
 			
 			FontMetrics fm = g2.getFontMetrics();

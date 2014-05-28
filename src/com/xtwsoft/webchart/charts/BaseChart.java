@@ -165,7 +165,6 @@ public abstract class BaseChart {
 		if(m_keys == null) {
 			return;
 		}
-		g2.setFont(new java.awt.Font("SimSun",java.awt.Font.PLAIN,12));//宋体
 		int rr = (int)this.getLegendIconWidth();
 		double drawPartWidth = legendWidth + this.getLegendIconWidth() + this.getLegendIconLabelMargin();   
 
@@ -201,7 +200,6 @@ public abstract class BaseChart {
 				Rectangle2D rect = fm.getStringBounds(text, g2);
 				labelHeight = (int)rect.getHeight();
 			}
-			g2.setFont(g2.getFont().deriveFont(this.getFloat(key, "font-size", 12)));
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 			g2.fillOval(x, (int)(y + labelHeight  - rr), rr, rr);
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);

@@ -178,6 +178,7 @@ public class ServiceChart extends BaseChart {
 			int y = (int)(fm.getAscent() - rect.getHeight() / 2);
 			g2.drawString(text, x,y);
 		}
+		g2.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
 	}
 	
 	private void drawPieHoleAndLine(Graphics2D g2,int pieRadius,int fromAnglue,int eachAngle) {

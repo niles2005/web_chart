@@ -96,6 +96,7 @@ public class WeekCircleChart extends BaseChart {
 		//图形部分高度
 		int graphHeight = pieRadius * 2;
 		drawLegend(g2,legendRectX,legendRectY,legendRectWidth,legendRectHeight,legendWidth,legendHeight,graphWidth,graphHeight);
+		g2.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
 	}
 	
 	private void drawCircle(Graphics2D g2,int pieRadius) {

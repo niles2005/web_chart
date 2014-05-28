@@ -1,6 +1,7 @@
 package com.xtwsoft.webchart;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -74,6 +75,7 @@ public class ImageChartManager {
             chartImage.setTranslate(0, 0);
             Graphics2D g2 = chartImage.getGraphics();
             
+            g2.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
             drawChart(g2,chartData,imageWidth,imageHeight);
 
             BufferedImage image = chartImage.getImage();
